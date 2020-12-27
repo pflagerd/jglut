@@ -1,0 +1,23 @@
+<project default="buildjar">
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
+	<target name="buildjar" unless="isWindows">
+		<javac srcdir="src"
+		       destdir="bin"
+		       debug="on"
+			   includeantruntime="false"
+		       source="1.8"/>
+		<tstamp/>
+		<jar destfile="lib/jglut.jar">
+			<fileset dir="bin"
+				 excludes="*.c *.h *.o *.lo Makefile* aclocal.m4 config.* configure* *.la libtool .deps/ .libs/ autom4te.cache/ m4/ config/"
+			/>
+			<fileset dir="src"
+			 excludes="*.c *.h *.o *.lo Makefile* aclocal.m4 config.* configure* *.la libtool .deps/ .libs/ autom4te.cache/ m4/ config/"
+			/>
+		</jar>
+		<copy file="lib/jglut.jar" tofile="../LearnJGlut/lib/jglut.jar"/>
+	</target>
+</project>

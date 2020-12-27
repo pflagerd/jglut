@@ -1,0 +1,8 @@
+/bin/
+/junk
+/include/
+/lib64/
+/build-linux/
+/build-windows/
+/jdk1.8.0_72/
+/.settings/
