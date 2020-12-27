@@ -22,10 +22,13 @@ LDFLAGS=\
 all: bin/libjglut.so
 	$(MAKE) -f makefile.win32
 	
-bin/libjglut.so: lib64/libjglut.so
+bin/libjglut.so: lib64/libjglut.so bin
 	cp -f lib64/libjglut.so bin/libjglut.so
 	cp -f lib64/libjglut.so src/libjglut.so
 
+bin:
+	mkdir bin
+	
 lib64/libjglut.so: build-linux/.libs/libjglut.so
 	cd build-linux; $(MAKE) install
 
@@ -39,7 +42,7 @@ jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
 	
 jdk-8u72-linux-x64.tar.gz:
-	wget -N https://download.oracle.com/otn/java/jdk/8u72-b15/jdk-8u72-linux-x64.tar.gz
+	wget -N https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
 
 build-linux/Makefile: src/configure
 	@printf '\nExecuting target: build-linux/Makefile\n'
