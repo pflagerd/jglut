@@ -24,10 +24,6 @@ AC_CHECK_LIB([m],[main],,
     AC_MSG_ERROR(["Cannot find standard math library: m"]),
     )
 
-AC_CHECK_LIB([pthread], [pthread_create],,
-    AC_MSG_ERROR(["Cannot find pthread."]),
-	)
-
 AM_CONDITIONAL([WIN32], [! test -z ${WIN32+x}])
 
 AC_OUTPUT

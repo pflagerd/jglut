@@ -5,4 +5,5 @@
 /build-linux/
 /build-windows/
 /jdk1.8.0_72/
-/.settings/
+/jdk-8u72-linux-x64.tar.gz
+/generatedHeadersAndCompiledJava

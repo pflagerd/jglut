@@ -19,11 +19,7 @@ public class glut extends glu {
 	}
 
 	static public String getVersion() {
-		return "0.1.4";
-	}
-
-	static {
-		glutSetDebug(debug);
+		return "0.1.5";
 	}
 
 	/**
@@ -93,6 +89,8 @@ public class glut extends glu {
 	public final int GLUT_LEFT_BUTTON = 0x00000000;
 	public final int GLUT_MIDDLE_BUTTON = 0x00000001;
 	public final int GLUT_RIGHT_BUTTON = 0x00000002;
+	public final int GLUT_SCROLLWHEEL_UP = 0x00000003;
+	public final int GLUT_SCROLLWHEEL_DOWN = 0x00000003;
 	public final int GLUT_DOWN = 0x00000000;
 	public final int GLUT_UP = 0x00000001;
 	public final int GLUT_LEFT = 0x00000000;

@@ -5,7 +5,7 @@
 #include "DPRINTF.h"
 
 
-unsigned char _DPRINTF_DEBUG_ = 1; // If non-zero, DPRINTF prints.
+unsigned char _DPRINTF_DEBUG_ = 0; // If non-zero, DPRINTF prints.
 
 int _DPRINTF_(const char* file, int line, const char* fmt, ...) {
 	if (!_DPRINTF_DEBUG_)

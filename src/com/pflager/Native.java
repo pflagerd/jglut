@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 
 public class Native {
 	
-	static boolean debug = Boolean.parseBoolean(System.getProperty("jglut.debug", "true"));
+	final static boolean debug = false;  // This debug flag is strictly for debugging in Native.java.  Change it explicitly.
 
 	/**
 	 * 
