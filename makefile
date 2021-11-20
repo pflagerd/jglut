@@ -8,6 +8,7 @@ CPPFLAGS=\
 	-g3\
 	-m64\
 	-Wall\
+	-I$(directory_containing_this_makefile)freeglut-3.2.1/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include/linux\
 	-I$(directory_containing_this_makefile)src
@@ -15,7 +16,7 @@ CPPFLAGS=\
 LDFLAGS_LIN=\
 	-Wl,--no-as-needed\
 	-Wl,--start-group\
-	-L/usr/lib64 -lglut -lGLU -lGL\
+	$(directory_containing_this_makefile)freeglut-3.2.1/lib/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
 	-Wl,--end-group -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 	
 LDFLAGS_WIN=\
@@ -43,9 +44,9 @@ lib/jglut.jar: bin/libjglut.so bin/libjglut.dll bin/libglut-0.dll
 	cp src/com/pflager/*.java bin/com/pflager
 	jar cf lib/jglut.jar -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
 	
-bin/libjglut.so: lib64/libjglut.so
-	cp -f lib64/libjglut.so bin/libjglut.so
-	cp -f lib64/libjglut.so src/libjglut.so
+bin/libjglut.so: lib/libjglut.so
+	cp -f lib/libjglut.so bin/libjglut.so
+	cp -f lib/libjglut.so src/libjglut.so
 
 src/libjglut.dll: bin/libjglut.dll
 	cp -f bin/libjglut.dll src/libjglut.dll
@@ -53,22 +54,22 @@ src/libjglut.dll: bin/libjglut.dll
 bin/libglut-0.dll: src/libglut-0.dll
 	- mkdir bin
 	cp -f src/libglut-0.dll bin/libglut-0.dll
-	
-lib64/libjglut.so: build-linux/.libs/libjglut.so
-	cd build-linux; $(MAKE) install
-	touch lib64/libjglut.so # this may be unnecessary
 
-bin/libjglut.dll: build-windows/.libs/libjglut.a
-	cd build-windows; $(MAKE) install
+lib/libjglut.so: linux-build/.libs/libjglut.so
+	cd linux-build; $(MAKE) install
+	touch lib/libjglut.so # this may be unnecessary
+
+bin/libjglut.dll: windows-build/.libs/libjglut.a
+	cd windows-build; $(MAKE) install
 	touch bin/libjglut.dll # this may be unnecessary
 
 # generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
 	
-build-linux/.libs/libjglut.so: build-linux/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd build-linux; $(MAKE) && touch .libs/libjglut.so
+linux-build/.libs/libjglut.so: linux-build/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
+	cd linux-build; $(MAKE) && touch .libs/libjglut.so
 	
-build-windows/.libs/libjglut.a: build-windows/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd build-windows; $(MAKE) && touch .libs/libjglut.a	
+windows-build/.libs/libjglut.a: windows-build/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
+	cd windows-build; $(MAKE) && touch .libs/libjglut.a	
 
 generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java
 	- mkdir bin
@@ -81,19 +82,29 @@ jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 jdk-8u72-linux-x64.tar.gz:
 	wget -N https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
 
-build-linux/Makefile: src/configure
-	- mkdir build-linux
-	cd build-linux; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
-	
-build-windows/Makefile: src/configure
-	- mkdir build-windows
-	cd build-windows; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
+linux-build/Makefile: src/configure freeglut-3.2.1/include/GL/freeglut.h freeglut-3.2.1/lib/libglut.a | linux-build
+	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
+
+windows-build/Makefile: src/configure | windows-build
+	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
 
 
 src/configure: src/configure.ac src/Makefile.am makefile
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 
+freeglut-3.2.1/include/GL/freeglut.h freeglut-3.2.1/lib/libglut.a:
+	sudo apt install freeglut3-dev
+	
+linux-build:
+	mkdir linux-build
+
+windows-build:
+	mkdir windows-build
+	
+# XRRQueryExtension
+	
+	
 .PHONY: clean
 clean:
 	rm -f generatedHeadersAndCompiledJava
@@ -110,8 +121,8 @@ clean:
 	rm -f src/aclocal.m4
 	rm -f src/configure
 	rm -f src/libjglut.*
-	rm -rf build-linux
-	rm -rf build-windows
+	rm -rf linux-build
+	rm -rf windows-build
 	rm -rf jdk-8u72-linux-x64.tar.gz
 	rm -rf jdk1.8.0_72
 	

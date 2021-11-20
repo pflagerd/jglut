@@ -1,7 +1,8 @@
 /bin/
+/freeglut-3.2.1/
 /junk
 /include/
-/lib64/
+/lib/
 /build-linux/
 /build-windows/
 /jdk1.8.0_72/
