@@ -102,8 +102,6 @@ linux-build:
 windows-build:
 	mkdir windows-build
 	
-# XRRQueryExtension
-	
 	
 .PHONY: clean
 clean:
