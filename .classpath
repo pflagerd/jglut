@@ -15,5 +15,9 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/jglut/lib/commons-io-2.6-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="jar/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="jar/swing2swt.jar"/>
+	<classpathentry kind="lib" path="jar/swt_lin_64.jar"/>
+	<classpathentry kind="lib" path="jar/swt_lin64_64_src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -29,14 +29,14 @@ LDFLAGS_WIN=\
 .PHONY: all
 all: linux # windows
 
-.PHONY: package jar
-jar package: lib/jglut.jar
+.PHONY: package
+package: jar/jglut.jar
 
-lib/jglut.jar: bin/libjglut.so # bin/libjglut.dll bin/libglut-0.dll
+jar/jglut.jar: linux | jar # windows
 	strip bin/libjglut.so
 	# /usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
 	cp src/com/pflager/*.java bin/com/pflager
-	jar cf lib/jglut.jar -C bin com -C bin libjglut.so # -C bin libglut-0.dll -C bin libjglut.dll
+	jar cf jar/jglut.jar -C bin com -C bin libjglut.so # -C bin libglut-0.dll -C bin libjglut.dll
 	
 .PHONY: linux
 linux: bin/libjglut.so
@@ -102,6 +102,8 @@ linux-build:
 windows-build:
 	mkdir windows-build
 	
+jar:
+	mkdir jar
 	
 .PHONY: clean
 clean:
