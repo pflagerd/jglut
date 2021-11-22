@@ -2,8 +2,12 @@
 /junk
 /include/
 /lib64/
-/build-linux/
-/build-windows/
+/linux-build/
+/windows-build/
 /jdk1.8.0_72/
 /jdk-8u72-linux-x64.tar.gz
-/generatedHeadersAndCompiledJava
+/.generatedHeadersAndCompiledJava
+/.autoconf
+/.freeglut
+/.mingw64-cross-gcc
+

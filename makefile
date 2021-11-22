@@ -28,21 +28,21 @@ LDFLAGS_WIN=\
 .PHONY: all
 all: linux windows
 
+.PHONY: package
+package: jar/jglut.jar
+	
+jar/jglut.jar: linux windows
+	strip bin/libjglut.so
+	/usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
+	cp src/com/pflager/*.java bin/com/pflager
+	jdk1.8.0_72/bin/jar cf jar/jglut.jar -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
+
 .PHONY: linux
 linux: bin/libjglut.so
 
 .PHONY: windows
 windows: bin/libjglut.dll bin/libglut-0.dll
 
-.PHONY: package jar
-jar package: lib/jglut.jar
-	
-lib/jglut.jar: bin/libjglut.so bin/libjglut.dll bin/libglut-0.dll
-	strip bin/libjglut.so
-	/usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
-	cp src/com/pflager/*.java bin/com/pflager
-	jar cf lib/jglut.jar -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
-	
 bin/libjglut.so: lib64/libjglut.so
 	cp -f lib64/libjglut.so bin/libjglut.so
 	cp -f lib64/libjglut.so src/libjglut.so
@@ -54,49 +54,82 @@ bin/libglut-0.dll: src/libglut-0.dll
 	- mkdir bin
 	cp -f src/libglut-0.dll bin/libglut-0.dll
 	
-lib64/libjglut.so: build-linux/.libs/libjglut.so
-	cd build-linux; $(MAKE) install
+lib64/libjglut.so: linux-build/.libs/libjglut.so
+	cd linux-build; $(MAKE) install
 	touch lib64/libjglut.so # this may be unnecessary
 
-bin/libjglut.dll: build-windows/.libs/libjglut.a
-	cd build-windows; $(MAKE) install
+bin/libjglut.dll: windows-build/.libs/libjglut.a
+	cd windows-build; $(MAKE) install
 	touch bin/libjglut.dll # this may be unnecessary
 
-# generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
+# .generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
 	
-build-linux/.libs/libjglut.so: build-linux/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd build-linux; $(MAKE) && touch .libs/libjglut.so
+linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
+	cd linux-build; $(MAKE) && touch .libs/libjglut.so
 	
-build-windows/.libs/libjglut.a: build-windows/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd build-windows; $(MAKE) && touch .libs/libjglut.a	
+windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
+	cd windows-build; $(MAKE) && touch .libs/libjglut.a	
 
-generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java
+.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java
 	- mkdir bin
 	jdk1.8.0_72/bin/javac -g -d bin -h src src/com/pflager/*.java
-	touch generatedHeadersAndCompiledJava
+	touch .generatedHeadersAndCompiledJava
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
-	
+
 jdk-8u72-linux-x64.tar.gz:
 	wget -N https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
 
-build-linux/Makefile: src/configure
-	- mkdir build-linux
-	cd build-linux; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
-	
-build-windows/Makefile: src/configure
-	- mkdir build-windows
-	cd build-windows; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
+linux-build/Makefile: src/configure | linux-build
+	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
+
+windows-build/Makefile: src/configure | windows-build
+	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
 
 
-src/configure: src/configure.ac src/Makefile.am makefile
+src/configure: src/configure.ac src/Makefile.am makefile | .autoconf .freeglut
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 
+linux-build:
+	mkdir linux-build
+
+windows-build:
+	mkdir windows-build
+
+
+.autoconf:
+	@version=$$(autoconf --version | head -1 | cut -d" " -f 4); if [ "$$version" == "2.69" ]; then echo $$version > .autoconf; else echo "autoconf 2.69 not found or wrong version"; fi
+	# sudo zypper install autoconf
+
+
+.automake:
+
+
+.libtool:
+
+
+.freeglut:
+	@version=($$(zypper search -s freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "3.2.1-lp152.1.3" ]; then echo $${version[6]} > .freeglut; else echo "freeglut 3.2.1-lp152.1.3 not found or wrong version"; fi
+	# sudo zypper install freeglut-devel
+
+.gcc:
+
+
+.mingw64-cross-gcc:
+	@version=($$(zypper search -s mingw64-cross-gcc | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.1" ]; then echo $${version[6]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0-lp152.25.1 not found or wrong version"; fi
+	# sudo zypper install mingw64-cross-gcc
+
+
+.mingw64-freeglut-devel:
+	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.1" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 9.2.0-lp152.25.1 not found or wrong version"; fi
+	# sudo zypper install mingw64-freeglut-devel
+
+
 .PHONY: clean
 clean:
-	rm -f generatedHeadersAndCompiledJava
+	rm -f .generatedHeadersAndCompiledJava
 	rm -f lib/jglut.jar
 	rm -rf lib64/
 	rm -rf bin/
@@ -110,8 +143,8 @@ clean:
 	rm -f src/aclocal.m4
 	rm -f src/configure
 	rm -f src/libjglut.*
-	rm -rf build-linux
-	rm -rf build-windows
+	rm -rf linux-build
+	rm -rf windows-build
 	rm -rf jdk-8u72-linux-x64.tar.gz
 	rm -rf jdk1.8.0_72
 	
