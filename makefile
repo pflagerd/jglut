@@ -27,6 +27,11 @@ LDFLAGS_WIN=\
 
 .PHONY: all
 all: linux windows
+	
+.PHONY: test
+test:
+	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:jar/commons-io-2.6.jar:jar/swing2swt.jar:jar/swt_lin_64.jar:jar/junit-jupiter-5.8.1.jar:jar/junit-jupiter-api-5.8.1.jar:jar/junit-jupiter-engine-5.8.1.jar:jar/junit-jupiter-migrationsupport-5.8.1.jar:jar/junit-jupiter-params-5.8.1.jar:jar/junit-vintage-engine-5.8.1.jar:jar/junit-platform-commons-1.8.1.jar:jar/junit-platform-console-1.8.1.jar:jar/junit-platform-console-standalone-1.8.1.jar:jar/junit-platform-engine-1.8.1.jar:jar/junit-platform-jfr-1.8.1.jar:jar/junit-platform-launcher-1.8.1.jar:jar/junit-platform-reporting-1.8.1.jar:jar/junit-platform-runner-1.8.1.jar:jar/junit-platform-suite-1.8.1.jar:jar/junit-platform-suite-api-1.8.1.jar:jar/junit-platform-suite-commons-1.8.1.jar:jar/junit-platform-suite-engine-1.8.1.jar:jar/junit-platform-testkit-1.8.1.jar:jar/junit-vintage-engine-5.8.1.jar
+
 
 .PHONY: package
 package: jar/jglut.jar
@@ -82,7 +87,7 @@ jdk-8u72-linux-x64.tar.gz:
 linux-build/Makefile: src/configure | linux-build
 	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
 
-windows-build/Makefile: src/configure | windows-build
+windows-build/Makefile: src/configure | windows-build .mingw64-cross-gcc .mingw64-freeglut-devel
 	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
 
 
