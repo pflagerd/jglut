@@ -50,15 +50,14 @@ bin/libjglut.so: lib64/libjglut.so
 src/libjglut.dll: bin/libjglut.dll
 	cp -f bin/libjglut.dll src/libjglut.dll
 
-bin/libglut-0.dll: src/libglut-0.dll
-	- mkdir bin
+bin/libglut-0.dll: src/libglut-0.dll | bin
 	cp -f src/libglut-0.dll bin/libglut-0.dll
 	
 lib64/libjglut.so: linux-build/.libs/libjglut.so
 	cd linux-build; $(MAKE) install
 	touch lib64/libjglut.so # this may be unnecessary
 
-bin/libjglut.dll: windows-build/.libs/libjglut.a
+bin/libjglut.dll: windows-build/.libs/libjglut.a | bin
 	cd windows-build; $(MAKE) install
 	touch bin/libjglut.dll # this may be unnecessary
 
@@ -70,8 +69,7 @@ linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiled
 windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
 	cd windows-build; $(MAKE) && touch .libs/libjglut.a	
 
-.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java
-	- mkdir bin
+.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin
 	jdk1.8.0_72/bin/javac -g -d bin -h src src/com/pflager/*.java
 	touch .generatedHeadersAndCompiledJava
 
@@ -92,6 +90,9 @@ src/configure: src/configure.ac src/Makefile.am makefile | .autoconf .freeglut
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 
+bin:
+	mkdir bin
+	
 linux-build:
 	mkdir linux-build
 
