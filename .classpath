@@ -7,13 +7,29 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="lib/swing2swt.jar"/>
-	<classpathentry kind="lib" path="lib/swt_lin_64.jar" sourcepath="lib/swt_lin64_64_src.zip"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="lib/commons-io-2.6.jar" sourcepath="lib/commons-io-2.6-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/jglut/lib/commons-io-2.6-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="jar/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="jar/jglut.jar"/>
+	<classpathentry kind="lib" path="jar/junit-jupiter-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-jupiter-api-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-jupiter-engine-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-jupiter-migrationsupport-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-jupiter-params-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-commons-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-console-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-console-standalone-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-engine-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-jfr-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-launcher-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-reporting-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-runner-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-suite-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-suite-api-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-suite-commons-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-suite-engine-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-testkit-1.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/junit-vintage-engine-5.8.1.jar"/>
+	<classpathentry kind="lib" path="jar/swing2swt.jar"/>
+	<classpathentry kind="lib" path="jar/swt_lin_64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
