@@ -3,4 +3,4 @@ build-and-package-jglut:
   script:
     - hostname
     - id
-    - time make
+    - time make -j 16
