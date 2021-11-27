@@ -26,17 +26,14 @@ LDFLAGS_WIN=\
 
 
 .PHONY: all
-all: linux windows
-	
+all: jar/jglut.jar
+
 .PHONY: test
-test:
+test: all
 	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo jar/*.jar | tr ' ' ':'`
 	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --scan-classpath
 	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --select-class org.pflager.AllTests
 
-.PHONY: package
-package: jar/jglut.jar
-	
 jar/jglut.jar: linux windows
 	strip bin/libjglut.so
 	/usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
