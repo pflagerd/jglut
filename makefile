@@ -30,7 +30,7 @@ all: linux windows
 	
 .PHONY: test
 test:
-	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp `echo jar/*.jar | tr ' ' ':'`
+	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:jar/commons-io-2.6.jar:jar/swing2swt.jar:jar/swt_lin_64.jar:jar/junit-jupiter-5.8.1.jar:jar/junit-jupiter-api-5.8.1.jar:jar/junit-jupiter-engine-5.8.1.jar:jar/junit-jupiter-migrationsupport-5.8.1.jar:jar/junit-jupiter-params-5.8.1.jar:jar/junit-vintage-engine-5.8.1.jar:jar/junit-platform-commons-1.8.1.jar:jar/junit-platform-console-1.8.1.jar:jar/junit-platform-console-standalone-1.8.1.jar:jar/junit-platform-engine-1.8.1.jar:jar/junit-platform-jfr-1.8.1.jar:jar/junit-platform-launcher-1.8.1.jar:jar/junit-platform-reporting-1.8.1.jar:jar/junit-platform-runner-1.8.1.jar:jar/junit-platform-suite-1.8.1.jar:jar/junit-platform-suite-api-1.8.1.jar:jar/junit-platform-suite-commons-1.8.1.jar:jar/junit-platform-suite-engine-1.8.1.jar:jar/junit-platform-testkit-1.8.1.jar:jar/junit-vintage-engine-5.8.1.jar
 	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin:jar/jglut.jar --scan-classpath
 	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin:jar/jglut.jar:jar/junit-platform-runner-1.8.1.jar --select-class org.pflager.AllTests
 
