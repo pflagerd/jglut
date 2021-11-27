@@ -1,0 +1,18 @@
+build-and-package-jglut:
+
+  script:
+    - hostname
+    - id
+    - time make
+    #- time make check
+    #- cd performance-metrics
+    #- cd ..
+    #- ls JUNITReports
+    #- echo "@@@@PWD=$PWD"
+  
+  artifacts:
+    paths:
+    - JUNITReports
+    when: always
+    reports:
+      junit: JUNITReports/TEST-*.xml
