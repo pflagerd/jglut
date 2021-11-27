@@ -18,18 +18,16 @@
 	<classpathentry kind="lib" path="jar/junit-platform-commons-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-console-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-console-standalone-1.8.1.jar"/>
-	<classpathentry kind="lib" path="jar/junit-platform-engine-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-jfr-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-launcher-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-reporting-1.8.1.jar"/>
-	<classpathentry kind="lib" path="jar/junit-platform-runner-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-suite-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-suite-api-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-suite-commons-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-suite-engine-1.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/junit-platform-testkit-1.8.1.jar"/>
-	<classpathentry kind="lib" path="jar/junit-vintage-engine-5.8.1.jar"/>
 	<classpathentry kind="lib" path="jar/swing2swt.jar"/>
 	<classpathentry kind="lib" path="jar/swt_lin_64.jar"/>
+	<classpathentry kind="lib" path="jar/junit-platform-engine-1.8.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
