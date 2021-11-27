@@ -1,12 +1,9 @@
 package org.pflager.gl;
 
-import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SuiteDisplayName;
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(JUnitPlatform.class)
-@SuiteDisplayName("JGlut AllTests Suite")
+@Suite
 @SelectClasses({
 	Test_com_pflager_gl_glRectdv.class,
 	Test_com_pflager_gl_glRectf__DDDD.class,

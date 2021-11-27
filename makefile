@@ -30,9 +30,9 @@ all: linux windows
 	
 .PHONY: test
 test:
-	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo lib/*.jar | tr ' ' ':'`
-	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin:jar/jglut.jar --scan-classpath
-	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin:jar/jglut.jar:jar/junit-platform-runner-1.8.1.jar --select-class org.pflager.AllTests
+	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo jar/*.jar | tr ' ' ':'`
+	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --scan-classpath
+	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --select-class org.pflager.AllTests
 
 .PHONY: package
 package: jar/jglut.jar
@@ -130,7 +130,7 @@ windows-build:
 
 
 .mingw64-freeglut-devel:
-	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.1" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 9.2.0-lp152.25.1 not found or wrong version"; fi
+	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "2.8.1-lp152.5.50" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 2.8.1-lp152.5.50 not found or wrong version"; fi
 	# sudo zypper install mingw64-freeglut-devel
 
 
