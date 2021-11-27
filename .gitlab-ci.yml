@@ -1,16 +1,6 @@
 build-and-package-jglut:
+  stage: build
   script:
     - hostname
     - id
     - time make
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: manual
-
-  
-  artifacts:
-    paths:
-    - JUNITReports
-    when: always
-    reports:
-      junit: JUNITReports/TEST-*.xml
