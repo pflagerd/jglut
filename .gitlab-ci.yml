@@ -3,8 +3,9 @@ build-and-package-jglut:
   script:
     - hostname
     - id
-    - time make -j 16
+    - time make -j 2
 
-  stage: test
-  script:
-    - time make check
+#  stage: test
+#  script:
+#    - time make check
+#

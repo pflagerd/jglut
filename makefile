@@ -24,6 +24,7 @@ LDFLAGS_WIN=\
 	-L/usr/lib64 -lglut -lglu32 -lopengl32\
 	-Wl,--end-group
 
+PROCESSES := 16
 
 .PHONY: all
 all: jar/jglut.jar
@@ -67,10 +68,10 @@ bin/libjglut.dll: windows-build/.libs/libjglut.a | bin
 # .generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
 	
 linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd linux-build; $(MAKE) && touch .libs/libjglut.so
+	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 	
 windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd windows-build; $(MAKE) && touch .libs/libjglut.a	
+	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.a	
 
 .generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin
 	jdk1.8.0_72/bin/javac -g -d bin -h src src/com/pflager/*.java
