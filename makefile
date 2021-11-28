@@ -28,8 +28,8 @@ LDFLAGS_WIN=\
 .PHONY: all
 all: jar/jglut.jar
 
-.PHONY: test
-test: all
+.PHONY: check
+check: all
 	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo jar/*.jar | tr ' ' ':'`
 	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --scan-classpath
 	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --select-class org.pflager.AllTests
