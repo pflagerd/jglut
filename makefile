@@ -24,7 +24,7 @@ LDFLAGS_WIN=\
 	-L/usr/lib64 -lglut -lglu32 -lopengl32\
 	-Wl,--end-group
 
-PROCESSES := 16
+PROCESSES := 8
 
 .PHONY: all
 all: jar/jglut.jar
