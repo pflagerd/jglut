@@ -39,7 +39,8 @@ jar/jglut.jar: linux windows
 	strip bin/libjglut.so
 	/usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
 	cp src/com/pflager/*.java bin/com/pflager
-	jdk1.8.0_72/bin/jar cf jar/jglut.jar -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
+	jdk1.8.0_72/bin/jar cfm jar/jglut.jar manifest.txt -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
+
 
 .PHONY: linux
 linux: bin/libjglut.so
@@ -105,7 +106,7 @@ windows-build:
 
 
 .autoconf:
-	@version=$$(autoconf --version | head -1 | cut -d" " -f 4); if [ "$$version" == "2.69" ]; then echo $$version > .autoconf; else echo "autoconf 2.69 not found or wrong version"; fi
+	@version=$$(autoconf --version | head -1 | cut -d" " -f 4); if [ "$$version" == "2.69" ]; then echo $$version > .autoconf; else echo "autoconf 2.69 not found or wrong version"; exit 1; fi
 	# sudo zypper install autoconf
 
 
@@ -116,19 +117,19 @@ windows-build:
 
 
 .freeglut:
-	@version=($$(zypper search -s freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "3.2.1-lp152.1.3" ]; then echo $${version[6]} > .freeglut; else echo "freeglut 3.2.1-lp152.1.3 not found or wrong version"; fi
+	@version=($$(zypper search -s freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "3.2.1-lp152.1.3" ]; then echo $${version[6]} > .freeglut; else echo "freeglut 3.2.1-lp152.1.3 not found or wrong version"; exit 1; fi
 	# sudo zypper install freeglut-devel
 
 .gcc:
 
 
 .mingw64-cross-gcc:
-	@version=($$(zypper search -s mingw64-cross-gcc | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.1" ]; then echo $${version[6]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0-lp152.25.1 not found or wrong version"; fi
+	@version=($$(zypper search -s mingw64-cross-gcc | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.2" ]; then echo $${version[6]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0-lp152.25.2 not found or wrong version"; exit 1; fi
 	# sudo zypper install mingw64-cross-gcc
 
 
 .mingw64-freeglut-devel:
-	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "2.8.1-lp152.5.50" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 2.8.1-lp152.5.50 not found or wrong version"; fi
+	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "2.8.1-lp152.5.50" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 2.8.1-lp152.5.50 not found or wrong version"; exit 1; fi
 	# sudo zypper install mingw64-freeglut-devel
 
 
