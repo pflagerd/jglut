@@ -1,5 +1,7 @@
 SHELL = /bin/bash
 
+export PATH ::= bin/:../bin/:$(PATH)
+
 directory_containing_this_makefile=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 CPPFLAGS=\
@@ -75,7 +77,7 @@ windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompi
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.a	
 
 .generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin
-	jdk1.8.0_72/bin/javac -g -d bin -h src src/com/pflager/*.java
+	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src src/com/pflager/*.java
 	touch .generatedHeadersAndCompiledJava
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
