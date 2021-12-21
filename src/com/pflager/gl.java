@@ -167,9 +167,9 @@ public class gl {
 	private static native void DisposeResources();
 
 	public final int GL_VERSION_1_1 = 1;
-	public final int GL_VERSION_1_2 = 1;
-	public final int GL_VERSION_1_3 = 1;
-	public final int GL_ARB_imaging = 1;
+//	public final int GL_VERSION_1_2 = 1;
+//	public final int GL_VERSION_1_3 = 1;
+//	public final int GL_ARB_imaging = 1;
 
 	/*
 	 * Constants
@@ -1792,20 +1792,20 @@ public class gl {
 //	public final int GL_CLAMP_TO_EDGE = 0x0000812F;
 //	public final int GL_MAX_ELEMENTS_VERTICES = 0x000080E8;
 //	public final int GL_MAX_ELEMENTS_INDICES = 0x000080E9;
-	public final int GL_BGR = 0x000080E0;
-	public final int GL_BGRA = 0x000080E1;
-	public final int GL_UNSIGNED_BYTE_3_3_2 = 0x00008032;
-	public final int GL_UNSIGNED_BYTE_2_3_3_REV = 0x00008362;
-	public final int GL_UNSIGNED_SHORT_5_6_5 = 0x00008363;
-	public final int GL_UNSIGNED_SHORT_5_6_5_REV = 0x00008364;
-	public final int GL_UNSIGNED_SHORT_4_4_4_4 = 0x00008033;
-	public final int GL_UNSIGNED_SHORT_4_4_4_4_REV = 0x00008365;
-	public final int GL_UNSIGNED_SHORT_5_5_5_1 = 0x00008034;
-	public final int GL_UNSIGNED_SHORT_1_5_5_5_REV = 0x00008366;
-	public final int GL_UNSIGNED_INT_8_8_8_8 = 0x00008035;
-	public final int GL_UNSIGNED_INT_8_8_8_8_REV = 0x00008367;
-	public final int GL_UNSIGNED_INT_10_10_10_2 = 0x00008036;
-	public final int GL_UNSIGNED_INT_2_10_10_10_REV = 0x00008368;
+//	public final int GL_BGR = 0x000080E0;
+//	public final int GL_BGRA = 0x000080E1;
+//	public final int GL_UNSIGNED_BYTE_3_3_2 = 0x00008032;
+//	public final int GL_UNSIGNED_BYTE_2_3_3_REV = 0x00008362;
+//	public final int GL_UNSIGNED_SHORT_5_6_5 = 0x00008363;
+//	public final int GL_UNSIGNED_SHORT_5_6_5_REV = 0x00008364;
+//	public final int GL_UNSIGNED_SHORT_4_4_4_4 = 0x00008033;
+//	public final int GL_UNSIGNED_SHORT_4_4_4_4_REV = 0x00008365;
+//	public final int GL_UNSIGNED_SHORT_5_5_5_1 = 0x00008034;
+//	public final int GL_UNSIGNED_SHORT_1_5_5_5_REV = 0x00008366;
+//	public final int GL_UNSIGNED_INT_8_8_8_8 = 0x00008035;
+//	public final int GL_UNSIGNED_INT_8_8_8_8_REV = 0x00008367;
+//	public final int GL_UNSIGNED_INT_10_10_10_2 = 0x00008036;
+//	public final int GL_UNSIGNED_INT_2_10_10_10_REV = 0x00008368;
 //	public final int GL_LIGHT_MODEL_COLOR_CONTROL = 0x000081F8;
 //	public final int GL_SINGLE_COLOR = 0x000081F9;
 //	public final int GL_SEPARATE_SPECULAR_COLOR = 0x000081FA;
