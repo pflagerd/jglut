@@ -808,4 +808,8 @@ public class glut extends glu {
 	 * More freeglut extensions
 	 */
 	public static native void glutSetDebug(boolean debug);
+	
+	public static void main(String[] args) {
+		System.out.println("jglut " + getVersion());
+	}
 }

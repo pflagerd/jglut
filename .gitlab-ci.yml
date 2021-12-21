@@ -1,0 +1,11 @@
+build-and-package-jglut:
+  stage: build
+  script:
+    - hostname
+    - id
+    - time make -j 2
+
+#  stage: test
+#  script:
+#    - time make check
+#

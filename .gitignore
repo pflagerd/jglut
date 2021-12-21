@@ -2,9 +2,12 @@
 /freeglut-3.2.1/
 /junk
 /include/
-/lib/
+/lib64/
 /linux-build/
 /windows-build/
 /jdk1.8.0_72/
 /jdk-8u72-linux-x64.tar.gz
-/generatedHeadersAndCompiledJava
+/.generatedHeadersAndCompiledJava
+/.autoconf
+/.mingw64-cross-gcc
+/.cmake
