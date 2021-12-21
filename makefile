@@ -68,8 +68,7 @@ linux-build/.libs/libjglut.so: linux-build/Makefile generatedHeadersAndCompiledJ
 windows-build/.libs/libjglut.a: windows-build/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
 	cd windows-build; $(MAKE) && touch .libs/libjglut.a	
 
-generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java
-	- mkdir bin
+generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin/
 	jdk1.8.0_72/bin/javac -g -d bin -h src src/com/pflager/*.java
 	touch generatedHeadersAndCompiledJava
 
@@ -92,7 +91,10 @@ src/configure: src/configure.ac src/Makefile.am makefile
 
 freeglut-3.2.1/include/GL/freeglut.h freeglut-3.2.1/lib/libglut.a:
 	sudo apt install freeglut3-dev
-	
+
+bin/:
+	mkdir bin
+
 linux-build:
 	mkdir linux-build
 
