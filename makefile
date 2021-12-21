@@ -8,7 +8,7 @@ CPPFLAGS=\
 	-g3\
 	-m64\
 	-Wall\
-	-I$(directory_containing_this_makefile)freeglut-3.2.1/include\
+	-I$(directory_containing_this_makefile)freeglut-3.2.1/build/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include/linux\
 	-I$(directory_containing_this_makefile)src
@@ -16,7 +16,7 @@ CPPFLAGS=\
 LDFLAGS_LIN=\
 	-Wl,--no-as-needed\
 	-Wl,--start-group\
-	$(directory_containing_this_makefile)freeglut-3.2.1/lib/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
+	$(directory_containing_this_makefile)freeglut-3.2.1/build/lib/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
 	-Wl,--end-group -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 	
 LDFLAGS_WIN=\
@@ -41,22 +41,21 @@ linux: bin/libjglut.so
 .PHONY: windows
 windows: bin/libjglut.dll bin/libglut-0.dll
 
-bin/libjglut.so: lib/libjglut.so
+bin/libjglut.so: lib/libjglut.so | bin/
 	cp -f lib/libjglut.so bin/libjglut.so
 	cp -f lib/libjglut.so src/libjglut.so
 
 src/libjglut.dll: bin/libjglut.dll
 	cp -f bin/libjglut.dll src/libjglut.dll
 
-bin/libglut-0.dll: src/libglut-0.dll
-	- mkdir bin
+bin/libglut-0.dll: src/libglut-0.dll | bin/
 	cp -f src/libglut-0.dll bin/libglut-0.dll
 
 lib/libjglut.so: linux-build/.libs/libjglut.so
 	cd linux-build; $(MAKE) install
 	touch lib/libjglut.so # this may be unnecessary
 
-bin/libjglut.dll: windows-build/.libs/libjglut.a
+bin/libjglut.dll: windows-build/.libs/libjglut.a | bin/
 	cd windows-build; $(MAKE) install
 	touch bin/libjglut.dll # this may be unnecessary
 
@@ -78,7 +77,7 @@ jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 jdk-8u72-linux-x64.tar.gz:
 	wget -N https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
 
-linux-build/Makefile: src/configure freeglut-3.2.1/include/GL/freeglut.h freeglut-3.2.1/lib/libglut.a | linux-build
+linux-build/Makefile: src/configure freeglut-3.2.1/build/lib/libglut.a | linux-build
 	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
 
 windows-build/Makefile: src/configure | windows-build
@@ -89,8 +88,11 @@ src/configure: src/configure.ac src/Makefile.am makefile
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 
-freeglut-3.2.1/include/GL/freeglut.h freeglut-3.2.1/lib/libglut.a:
-	sudo apt install freeglut3-dev
+freeglut-3.2.1/build/lib/libglut.a: | freeglut-3.2.1/build/
+	cd freeglut-3.2.1/build/; cmake ..; make -j 8
+	
+freeglut-3.2.1/build/:
+	mkdir freeglut-3.2.1/build
 
 bin/:
 	mkdir bin
@@ -121,4 +123,5 @@ clean:
 	rm -rf windows-build
 	rm -rf jdk-8u72-linux-x64.tar.gz
 	rm -rf jdk1.8.0_72
+	cd freeglut-3.2.1; git clean -dfx
 	
