@@ -1,14 +1,47 @@
 package com.pflager;
 
-public class gl extends Native {
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-	static {
-		if (System.getProperty("os.name").contains("Windows")) {
-			load("/libglut-0.dll");
-			load("/libjglut.dll");
-		} else { // Assumes Linux
-			load("/libjglut.so");
+import javax.imageio.ImageIO;
+
+public class gl {
+
+	/**
+	 * Takes a snapshot of the currently displaying screen as a .png and saves it to a file.
+	 *
+	 * @param imageFileName is passed the name of the file to save to.
+	 */
+	public void captureCanvasAsImageFile(String imageFileName) throws IOException {
+		// glReadBuffer(GL_FRONT);
+		// Get viewport size
+		int[] viewport = new int[4];
+
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		int width = viewport[2];
+		int height = viewport[3];
+		System.out.println("width == " + width + ", height == " + height);
+
+		int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
+		byte[] pixelBytes = new byte[width * height * bpp];
+		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixelBytes);
+
+		File file = new File(imageFileName);
+		String format = "PNG";
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int i = (x + (width * y)) * bpp;
+				int r = pixelBytes[i] & 0xFF;
+				int g = pixelBytes[i + 1] & 0xFF;
+				int b = pixelBytes[i + 2] & 0xFF;
+				image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
+			}
 		}
+
+		ImageIO.write(image, format, file);
 	}
 
 	static {

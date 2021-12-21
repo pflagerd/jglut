@@ -1,10 +1,11 @@
 package com.pflager;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 
 public class glut extends glu {
 
@@ -19,45 +20,111 @@ public class glut extends glu {
 	}
 
 	static public String getVersion() {
-		return "0.1.5";
+		return "0.1.6";
 	}
+	
+	static {
+		if (System.getProperty("os.name").contains("Windows")) {
+			load("/libglut-0.dll");
+			load("/libjglut.dll");
+		} else { // Assumes Linux
+			load("/libjglut.so");
+		}
+	}
+
+	final static boolean debug = false;  // This debug flag is strictly for debugging in glut.java.  Change it explicitly.
 
 	/**
-	 * Takes a snapshot of the currently displaying screen as a .png and saves it to a file.
-	 *
-	 * @param imageFileName is passed the name of the file to save to.
+	 * 
+	 * Searches glut class for a named native resource, and if found, loads it using
+	 * System.load().
+	 * 
+	 * If not in a .jar, loads directly from disk. If in a jar, extracts to the same
+	 * directory as contains the .jar and then loads it from disk.
+	 * 
+	 * NOTE: Dependent natives must be loaded in order.
+	 * 
+	 * @param resourcePath Pass the resource path, usually as a class-relative
+	 *                     absolute path. e.g. /libjglut.dll or /libjglut.so
 	 */
-	public void captureCanvasAsImageFile(String imageFileName) throws IOException {
-		// glReadBuffer(GL_FRONT);
-		// Get viewport size
-		int[] viewport = new int[4];
+	static void load(String resourcePath) {
+		if (debug)
+			System.out.println("resourcePath == \"" + resourcePath + "\"");
 
-		glGetIntegerv(GL_VIEWPORT, viewport);
-		int width = viewport[2];
-		int height = viewport[3];
-		System.out.println("width == " + width + ", height == " + height);
-
-		int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
-		byte[] pixelBytes = new byte[width * height * bpp];
-		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixelBytes);
-
-		File file = new File(imageFileName);
-		String format = "PNG";
-		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				int i = (x + (width * y)) * bpp;
-				int r = pixelBytes[i] & 0xFF;
-				int g = pixelBytes[i + 1] & 0xFF;
-				int b = pixelBytes[i + 2] & 0xFF;
-				image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
+		if (isInAJar(resourcePath)) {
+			extractFromJarAndLoad(resourcePath);
+		} else {
+			try {
+				System.load(new File(glut.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + resourcePath);
+			} catch (URISyntaxException e) {
+				System.err.println("Should never reach here!");
+				e.printStackTrace(System.err);
 			}
 		}
-
-		ImageIO.write(image, format, file);
 	}
 
+	static boolean isInAJar(String resourcePath) {
+		return glut.class.getResource("glut.class").toString().startsWith("jar:");
+	}
+
+	static void extractFromJarAndLoad(String resourcePath) {
+		try (InputStream in = glut.class.getResourceAsStream(resourcePath)) {
+			if (debug)
+				System.out.println("resourcePath == " + in.toString());
+			
+			File jarFile = new File(glut.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+			if (debug)
+				System.out.println("jarFile.lastModified() == " + jarFile.lastModified());
+			
+			File jarDir = new File(glut.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+			if (debug)
+				System.out.println(jarDir.getAbsolutePath());
+
+			String destinationSharedObjectFileString = jarDir.getAbsolutePath() + "/" + resourcePath.substring(1);
+			if (debug)
+				System.out.println("destinationSharedObjectFileString == \"" + destinationSharedObjectFileString + "\"");
+			
+			// If the timestamp on the jar file is the same or older than that of the existing destinationSharedObjectFileString
+			// then do not extract it.
+			File destinationSharedObjectFile = new File(destinationSharedObjectFileString);
+			if (debug)
+				System.out.println("destinationSharedObjectFile.lastModified() == " + destinationSharedObjectFile.lastModified());
+
+			if (jarFile.lastModified() > destinationSharedObjectFile.lastModified()) {
+				if (debug)
+					System.out.println(jarFile.getAbsolutePath() + " is younger than " + destinationSharedObjectFile.getAbsolutePath() + ", extracting and overwriting it!");
+				try (FileOutputStream fos = new FileOutputStream(destinationSharedObjectFileString)) {
+					byte[] buffer = new byte[8 * 1024 * 1024];
+					int read = -1;
+					while ((read = in.read(buffer)) != -1) {
+						fos.write(buffer, 0, read);
+					}
+				} catch (FileNotFoundException fnfe) {
+					System.err.println("File not found: " + destinationSharedObjectFileString);
+					fnfe.printStackTrace(System.err);
+					System.exit(1);
+				} catch (IOException ieo) {
+					System.out.println("IOException writing to " + destinationSharedObjectFileString);
+					ieo.printStackTrace(System.err);
+					System.exit(1);
+				}
+			} else {
+				if (debug)
+					System.out.println(jarFile.getAbsolutePath() + " is older than or the same age as " + destinationSharedObjectFile.getAbsolutePath() + ", therefore NOT extracting NOR overwriting it!");
+			}
+			
+			System.load(destinationSharedObjectFileString);
+		} catch (IOException ioe) {
+			System.out.println("IOException getting resource as stream: " + resourcePath);
+			ioe.printStackTrace(System.err);
+			System.exit(1);
+		} catch (URISyntaxException use) {
+			System.out.println("URISyntaxException getting resource as stream: " + resourcePath);
+			use.printStackTrace(System.err);
+			System.exit(1);
+		}
+	}
+	
 	/*
 	 * GLUT API macro definitions -- the special key codes:
 	 */
