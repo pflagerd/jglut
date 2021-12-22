@@ -1,8 +1,8 @@
 SHELL = /bin/bash
 
-export PATH ::= bin/:../bin/:$(PATH)
-
 directory_containing_this_makefile=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
+export PATH ::= $(directory_containing_this_makefile)bin/:$(realpath $(directory_containing_this_makefile)../)/bin/:$(PATH)
 
 CPPFLAGS=\
 	-std=gnu99\
@@ -10,7 +10,7 @@ CPPFLAGS=\
 	-g3\
 	-m64\
 	-Wall\
-	-I$(directory_containing_this_makefile)freeglut-3.2.1/build/include\
+	-I$(directory_containing_this_makefile)include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include/linux\
 	-I$(directory_containing_this_makefile)src
@@ -18,13 +18,13 @@ CPPFLAGS=\
 LDFLAGS_LIN=\
 	-Wl,--no-as-needed\
 	-Wl,--start-group\
-	$(directory_containing_this_makefile)freeglut-3.2.1/build/lib/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
+	$(directory_containing_this_makefile)lib64/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
 	-Wl,--end-group -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 	
 LDFLAGS_WIN=\
 	-Wl,--no-as-needed\
 	-Wl,--start-group\
-	-L/usr/lib64 -lglut -lglu32 -lopengl32\
+	/usr/x86_64-w64-mingw32/sys-root/mingw/lib/libglut.dll.a -lglut -lglu32 -lopengl32\
 	-Wl,--end-group
 
 PROCESSES := 8
@@ -74,7 +74,7 @@ bin/libjglut.dll: windows-build/.libs/libjglut.a | bin/
 linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 	
-windows-build/.libs/libjglut.a: windows-build/Makefile generatedHeadersAndCompiledJava src/*.c src/*.h
+windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.a	
 
 .generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin/
@@ -85,21 +85,22 @@ jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
 
 jdk-8u72-linux-x64.tar.gz:
-	wget -N https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
+	wget -N --quiet https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
 
-linux-build/Makefile: src/configure freeglut-3.2.1/build/lib/libglut.a | linux-build
+linux-build/Makefile: src/configure lib64/libglut.a | linux-build
 	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
 
+
 windows-build/Makefile: src/configure | windows-build .mingw64-cross-gcc .mingw64-freeglut-devel
-	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_WIN)"
+	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS) -DGLUT_DISABLE_ATEXIT_HACK" LDFLAGS="$(LDFLAGS_WIN)"
 
 
-src/configure: src/configure.ac src/Makefile.am makefile freeglut-3.2.1/build/lib/libglut.a | .autoconf
+src/configure: src/configure.ac src/Makefile.am makefile lib64/libglut.a | .autoconf .automake .libtool /usr/lib64/libXrandr.so /usr/lib64/libXxf86vm.so
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 
-freeglut-3.2.1/build/lib/libglut.a: freeglut-3.2.1/build/ | .cmake
-	cd freeglut-3.2.1/build/; ../../../bin/cmake ..; make -j 8
+lib64/libglut.a: freeglut-3.2.1/build/ | .cmake
+	cd freeglut-3.2.1/build/; cmake -DCMAKE_INSTALL_PREFIX:PATH=$(directory_containing_this_makefile) ..; make -j 8; make install
 	
 freeglut-3.2.1/build/: freeglut-3.2.1/
 	mkdir freeglut-3.2.1/build/
@@ -118,31 +119,32 @@ windows-build:
 	mkdir windows-build
 
 .autoconf:
-	@version=$$(autoconf --version | head -1 | cut -d" " -f 4); if [ "$$version" == "2.69" ]; then echo $$version > .autoconf; else echo "autoconf 2.69 not found or wrong version"; exit 1; fi
-	# sudo zypper install autoconf
-
+	@version=$$(autoconf --version | head -1 | cut -d" " -f 4); if [ "$$version" == "2.69" ]; then echo $$version > .autoconf; else echo "autoconf 2.69 not found or wrong version"; sudo zypper install -y autoconf; fi
 
 .automake:
-
+	@version=$$(automake --version | head -1 | cut -d" " -f 4); if [ "$$version" == "1.15.1" ]; then echo $$version > .automake; else echo "automake 1.15.1 not found or wrong version"; sudo zypper install -y automake; fi
 
 .cmake:
 	@version=$$(cmake --version | head -1 | cut -d" " -f 3); if [ "$$version" == "3.22.1" ]; then echo $$version > .cmake; else echo "cmake 3.22.1 not found or wrong version"; exit 1; fi
 
-
-.libtool:
-
-
 .gcc:
 
 
+.libtool:
+	@version=$$(libtool --version | head -1 ); if [ "$$version" == "2.4.6" ]; then echo $$version > .libtool; else echo "libtool 2.4.6 not found or wrong version"; sudo zypper install -y libtool; fi
+
 .mingw64-cross-gcc:
-	@version=($$(zypper search -s mingw64-cross-gcc | head -6 | tail -1)); if [ "$${version[6]}" == "9.2.0-lp152.25.2" ]; then echo $${version[6]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0-lp152.25.2 not found or wrong version"; exit 1; fi
-	# sudo zypper install mingw64-cross-gcc
+	@version=($$(x86_64-w64-mingw32-gcc --version | head -1)); if [ "$${version[3]}" == "9.2.0" ]; then echo $${version[3]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0 not found or wrong version"; sudo zypper install -y mingw64-cross-gcc; fi
 
 
 .mingw64-freeglut-devel:
-	@version=($$(zypper search -s mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "2.8.1-lp152.5.50" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 2.8.1-lp152.5.50 not found or wrong version"; exit 1; fi
-	# sudo zypper install mingw64-freeglut-devel
+	@version=($$(zypper search -s -i mingw64-freeglut-devel | head -6 | tail -1)); if [ "$${version[6]}" == "2.8.1-lp153.5.10" ]; then echo $${version[6]} > .mingw64-freeglut-devel; else echo "mingw64-freeglut-devel 2.8.1-lp153.5.10 not found or wrong version"; sudo zypper install -y mingw64-freeglut-devel; fi
+
+/usr/lib64/libXxf86vm.so:
+	sudo zypper install -y libXxf86vm-devel
+
+/usr/lib64/libXrandr.so:
+	sudo zypper install -y libXrandr-devel
 
 
 .PHONY: clean

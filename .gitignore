@@ -9,5 +9,8 @@
 /jdk-8u72-linux-x64.tar.gz
 /.generatedHeadersAndCompiledJava
 /.autoconf
+/.automake
 /.mingw64-cross-gcc
 /.cmake
+/.mingw64-freeglut-devel
+/.libtool
