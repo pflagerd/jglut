@@ -79,6 +79,7 @@ jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 
 jdk-8u72-linux-x64.tar.gz:
 	wget -N --quiet https://github.com/pflagerd/jglut/releases/download/v0.1.4/jdk-8u72-linux-x64.tar.gz
+	touch jdk-8u72-linux-x64.tar.gz
 
 linux-build/Makefile: src/configure lib64/libglut.a | linux-build
 	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
