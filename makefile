@@ -38,47 +38,40 @@ check: all
 	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --scan-classpath
 	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --select-class org.pflager.AllTests
 
-jar/jglut.jar: linux windows
+jar/jglut.jar: bin/libjglut.so bin/libjglut.dll bin/libglut-0.dll
 	strip bin/libjglut.so
 	/usr/x86_64-w64-mingw32/bin/strip bin/libjglut.dll
 	cp src/com/pflager/*.java bin/com/pflager
 	jdk1.8.0_72/bin/jar cfm jar/jglut.jar manifest.txt -C bin com -C bin libglut-0.dll -C bin libjglut.dll -C bin libjglut.so
-
+	touch jar/jglut.jar
 	
-.PHONY: linux
-linux: bin/libjglut.so
-
-.PHONY: windows
-windows: bin/libjglut.dll bin/libglut-0.dll
-
 bin/libjglut.so: lib64/libjglut.so | bin/
 	cp -f lib64/libjglut.so bin/libjglut.so
 	cp -f lib64/libjglut.so src/libjglut.so
 
-src/libjglut.dll: bin/libjglut.dll
-	cp -f bin/libjglut.dll src/libjglut.dll
-
 bin/libglut-0.dll: src/libglut-0.dll | bin/
-	cp -f src/libglut-0.dll bin/libglut-0.dll
+	cp -f src/libglut-0.dll bin/libglut-0.dll # we do this because eclipse JDT will attempt to erase bin, rebuild bin and recopy from src
+	touch bin/libglut.dll
 
 lib64/libjglut.so: linux-build/.libs/libjglut.so
 	cd linux-build; $(MAKE) install
 	touch lib64/libjglut.so # this may be unnecessary
 
-bin/libjglut.dll: windows-build/.libs/libjglut.a | bin/
+bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 	cd windows-build; $(MAKE) install
+	cp windows-build/.libs/libjglut.dll src/libjglut.dll # we do this because eclipse JDT will attempt to erase bin, rebuild bin and recopy from src
 	touch bin/libjglut.dll # this may be unnecessary
 
 # .generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
 	
-linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
+linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava $(wildcard src/*.c src/*.h)
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
-	
-windows-build/.libs/libjglut.a: windows-build/Makefile .generatedHeadersAndCompiledJava src/*.c src/*.h
-	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.a	
 
-.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac src/com/pflager/*.java | bin/
-	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src src/com/pflager/*.java
+windows-build/.libs/libjglut.dll: windows-build/Makefile .generatedHeadersAndCompiledJava $(wildcard src/*.c src/*.h)
+	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
+
+.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) makefile | bin/
+	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java)
 	touch .generatedHeadersAndCompiledJava
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
@@ -95,12 +88,14 @@ windows-build/Makefile: src/configure | windows-build .mingw64-cross-gcc .mingw6
 	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS) -DGLUT_DISABLE_ATEXIT_HACK" LDFLAGS="$(LDFLAGS_WIN)"
 
 
-src/configure: src/configure.ac src/Makefile.am makefile lib64/libglut.a | .autoconf .automake .libtool /usr/lib64/libXrandr.so /usr/lib64/libXxf86vm.so
+src/configure: src/configure.ac src/Makefile.am makefile lib64/libglut.a | .autoconf .automake .libtool /usr/lib64/libXrandr.so /usr/lib64/libXxf86vm.so .version
 	@printf '\nExecuting target: src/configure\n'
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
+	touch src/configure
 
 lib64/libglut.a: freeglut-3.2.1/build/ | .cmake
-	cd freeglut-3.2.1/build/; cmake -DCMAKE_INSTALL_PREFIX:PATH=$(directory_containing_this_makefile) ..; make -j 8; make install
+	cd freeglut-3.2.1/build/; cmake -DCMAKE_INSTALL_PREFIX:PATH=$(directory_containing_this_makefile) ..; make -j $(PROCESSES); make install
+	touch lib64/libglut.a
 	
 freeglut-3.2.1/build/: freeglut-3.2.1/
 	mkdir freeglut-3.2.1/build/
@@ -108,6 +103,10 @@ freeglut-3.2.1/build/: freeglut-3.2.1/
 freeglut-3.2.1/:
 	git clone git@gitlab.pflager.net:jglut/freeglut-3.2.1.git
 
+
+.version:
+	@version=($$(git status | head -1)); if ! head -1 src/configure.ac | grep $${version[2]} > /dev/null; then echo "update configure.ac to $${version[2]}"; exit 1; fi
+	touch .version
 
 bin/:
 	mkdir bin

@@ -1,4 +1,4 @@
-AC_INIT(jglut, 0.1.5, daniel.pflager@gmail.com)
+AC_INIT(jglut, 0.1.6, daniel.pflager@gmail.com)
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_FILES([Makefile])

@@ -14,3 +14,4 @@
 /.cmake
 /.mingw64-freeglut-devel
 /.libtool
+/.version
