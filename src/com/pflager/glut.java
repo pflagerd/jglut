@@ -128,257 +128,257 @@ public class glut extends glu {
 	/*
 	 * GLUT API macro definitions -- the special key codes:
 	 */
-	public final int GLUT_KEY_F1 = 0x00000001;
-	public final int GLUT_KEY_F2 = 0x00000002;
-	public final int GLUT_KEY_F3 = 0x00000003;
-	public final int GLUT_KEY_F4 = 0x00000004;
-	public final int GLUT_KEY_F5 = 0x00000005;
-	public final int GLUT_KEY_F6 = 0x00000006;
-	public final int GLUT_KEY_F7 = 0x00000007;
-	public final int GLUT_KEY_F8 = 0x00000008;
-	public final int GLUT_KEY_F9 = 0x00000009;
-	public final int GLUT_KEY_F10 = 0x0000000A;
-	public final int GLUT_KEY_F11 = 0x0000000B;
-	public final int GLUT_KEY_F12 = 0x0000000C;
-	public final int GLUT_KEY_LEFT = 0x00000064;
-	public final int GLUT_KEY_UP = 0x00000065;
-	public final int GLUT_KEY_RIGHT = 0x00000066;
-	public final int GLUT_KEY_DOWN = 0x00000067;
-	public final int GLUT_KEY_PAGE_UP = 0x00000068;
-	public final int GLUT_KEY_PAGE_DOWN = 0x00000069;
-	public final int GLUT_KEY_HOME = 0x0000006A;
-	public final int GLUT_KEY_END = 0x0000006B;
-	public final int GLUT_KEY_INSERT = 0x0000006C;
+	public final static int GLUT_KEY_F1 = 0x00000001;
+	public final static int GLUT_KEY_F2 = 0x00000002;
+	public final static int GLUT_KEY_F3 = 0x00000003;
+	public final static int GLUT_KEY_F4 = 0x00000004;
+	public final static int GLUT_KEY_F5 = 0x00000005;
+	public final static int GLUT_KEY_F6 = 0x00000006;
+	public final static int GLUT_KEY_F7 = 0x00000007;
+	public final static int GLUT_KEY_F8 = 0x00000008;
+	public final static int GLUT_KEY_F9 = 0x00000009;
+	public final static int GLUT_KEY_F10 = 0x0000000A;
+	public final static int GLUT_KEY_F11 = 0x0000000B;
+	public final static int GLUT_KEY_F12 = 0x0000000C;
+	public final static int GLUT_KEY_LEFT = 0x00000064;
+	public final static int GLUT_KEY_UP = 0x00000065;
+	public final static int GLUT_KEY_RIGHT = 0x00000066;
+	public final static int GLUT_KEY_DOWN = 0x00000067;
+	public final static int GLUT_KEY_PAGE_UP = 0x00000068;
+	public final static int GLUT_KEY_PAGE_DOWN = 0x00000069;
+	public final static int GLUT_KEY_HOME = 0x0000006A;
+	public final static int GLUT_KEY_END = 0x0000006B;
+	public final static int GLUT_KEY_INSERT = 0x0000006C;
 
 	/*
 	 * GLUT API macro definitions -- mouse state definitions
 	 */
-	public final int GLUT_LEFT_BUTTON = 0x00000000;
-	public final int GLUT_MIDDLE_BUTTON = 0x00000001;
-	public final int GLUT_RIGHT_BUTTON = 0x00000002;
-	public final int GLUT_SCROLLWHEEL_UP = 0x00000003;
-	public final int GLUT_SCROLLWHEEL_DOWN = 0x00000003;
-	public final int GLUT_DOWN = 0x00000000;
-	public final int GLUT_UP = 0x00000001;
-	public final int GLUT_LEFT = 0x00000000;
-	public final int GLUT_ENTERED = 0x00000001;
+	public final static int GLUT_LEFT_BUTTON = 0x00000000;
+	public final static int GLUT_MIDDLE_BUTTON = 0x00000001;
+	public final static int GLUT_RIGHT_BUTTON = 0x00000002;
+	public final static int GLUT_SCROLLWHEEL_UP = 0x00000003;
+	public final static int GLUT_SCROLLWHEEL_DOWN = 0x00000003;
+	public final static int GLUT_DOWN = 0x00000000;
+	public final static int GLUT_UP = 0x00000001;
+	public final static int GLUT_LEFT = 0x00000000;
+	public final static int GLUT_ENTERED = 0x00000001;
 
 	/*
 	 * GLUT API macro definitions -- the display mode definitions
 	 */
-	public final int GLUT_RGB = 0x00000000;
-	public final int GLUT_RGBA = 0x00000000;
-	public final int GLUT_INDEX = 0x00000001;
-	public final int GLUT_SINGLE = 0x00000000;
-	public final int GLUT_DOUBLE = 0x00000002;
-	public final int GLUT_ACCUM = 0x00000004;
-	public final int GLUT_ALPHA = 0x00000008;
-	public final int GLUT_DEPTH = 0x00000010;
-	public final int GLUT_STENCIL = 0x00000020;
-	public final int GLUT_MULTISAMPLE = 0x00000080;
-	public final int GLUT_STEREO = 0x00000100;
-	public final int GLUT_LUMINANCE = 0x00000200;
+	public final static int GLUT_RGB = 0x00000000;
+	public final static int GLUT_RGBA = 0x00000000;
+	public final static int GLUT_INDEX = 0x00000001;
+	public final static int GLUT_SINGLE = 0x00000000;
+	public final static int GLUT_DOUBLE = 0x00000002;
+	public final static int GLUT_ACCUM = 0x00000004;
+	public final static int GLUT_ALPHA = 0x00000008;
+	public final static int GLUT_DEPTH = 0x00000010;
+	public final static int GLUT_STENCIL = 0x00000020;
+	public final static int GLUT_MULTISAMPLE = 0x00000080;
+	public final static int GLUT_STEREO = 0x00000100;
+	public final static int GLUT_LUMINANCE = 0x00000200;
 
 	/*
 	 * GLUT API macro definitions -- windows and menu related definitions
 	 */
-	public final int GLUT_MENU_NOT_IN_USE = 0x00000000;
-	public final int GLUT_MENU_IN_USE = 0x00000001;
-	public final int GLUT_NOT_VISIBLE = 0x00000000;
-	public final int GLUT_VISIBLE = 0x00000001;
-	public final int GLUT_HIDDEN = 0x00000000;
-	public final int GLUT_FULLY_RETAINED = 0x00000001;
-	public final int GLUT_PARTIALLY_RETAINED = 0x00000002;
-	public final int GLUT_FULLY_COVERED = 0x00000003;
+	public final static int GLUT_MENU_NOT_IN_USE = 0x00000000;
+	public final static int GLUT_MENU_IN_USE = 0x00000001;
+	public final static int GLUT_NOT_VISIBLE = 0x00000000;
+	public final static int GLUT_VISIBLE = 0x00000001;
+	public final static int GLUT_HIDDEN = 0x00000000;
+	public final static int GLUT_FULLY_RETAINED = 0x00000001;
+	public final static int GLUT_PARTIALLY_RETAINED = 0x00000002;
+	public final static int GLUT_FULLY_COVERED = 0x00000003;
 
-	public final int GLUT_STROKE_ROMAN = 0x00000000;
-	public final int GLUT_STROKE_MONO_ROMAN = 0x00000001;
-	public final int GLUT_BITMAP_9_BY_15 = 0x00000002;
-	public final int GLUT_BITMAP_8_BY_13 = 0x00000003;
-	public final int GLUT_BITMAP_TIMES_ROMAN_10 = 0x00000004;
-	public final int GLUT_BITMAP_TIMES_ROMAN_24 = 0x00000005;
-	public final int GLUT_BITMAP_HELVETICA_10 = 0x00000006;
-	public final int GLUT_BITMAP_HELVETICA_12 = 0x00000007;
-	public final int GLUT_BITMAP_HELVETICA_18 = 0x00000008;
+	public final static int GLUT_STROKE_ROMAN = 0x00000000;
+	public final static int GLUT_STROKE_MONO_ROMAN = 0x00000001;
+	public final static int GLUT_BITMAP_9_BY_15 = 0x00000002;
+	public final static int GLUT_BITMAP_8_BY_13 = 0x00000003;
+	public final static int GLUT_BITMAP_TIMES_ROMAN_10 = 0x00000004;
+	public final static int GLUT_BITMAP_TIMES_ROMAN_24 = 0x00000005;
+	public final static int GLUT_BITMAP_HELVETICA_10 = 0x00000006;
+	public final static int GLUT_BITMAP_HELVETICA_12 = 0x00000007;
+	public final static int GLUT_BITMAP_HELVETICA_18 = 0x00000008;
 
 	/*
 	 * GLUT API macro definitions -- the glutGet parameters
 	 */
-	public final int GLUT_WINDOW_X = 0x00000064;
-	public final int GLUT_WINDOW_Y = 0x00000065;
-	public final int GLUT_WINDOW_WIDTH = 0x00000066;
-	public final int GLUT_WINDOW_HEIGHT = 0x00000067;
-	public final int GLUT_WINDOW_BUFFER_SIZE = 0x00000068;
-	public final int GLUT_WINDOW_STENCIL_SIZE = 0x00000069;
-	public final int GLUT_WINDOW_DEPTH_SIZE = 0x0000006A;
-	public final int GLUT_WINDOW_RED_SIZE = 0x0000006B;
-	public final int GLUT_WINDOW_GREEN_SIZE = 0x0000006C;
-	public final int GLUT_WINDOW_BLUE_SIZE = 0x0000006D;
-	public final int GLUT_WINDOW_ALPHA_SIZE = 0x0000006E;
-	public final int GLUT_WINDOW_ACCUM_RED_SIZE = 0x0000006F;
-	public final int GLUT_WINDOW_ACCUM_GREEN_SIZE = 0x00000070;
-	public final int GLUT_WINDOW_ACCUM_BLUE_SIZE = 0x00000071;
-	public final int GLUT_WINDOW_ACCUM_ALPHA_SIZE = 0x00000072;
-	public final int GLUT_WINDOW_DOUBLEBUFFER = 0x00000073;
-	public final int GLUT_WINDOW_RGBA = 0x00000074;
-	public final int GLUT_WINDOW_PARENT = 0x00000075;
-	public final int GLUT_WINDOW_NUM_CHILDREN = 0x00000076;
-	public final int GLUT_WINDOW_COLORMAP_SIZE = 0x00000077;
-	public final int GLUT_WINDOW_NUM_SAMPLES = 0x00000078;
-	public final int GLUT_WINDOW_STEREO = 0x00000079;
-	public final int GLUT_WINDOW_CURSOR = 0x0000007A;
+	public final static int GLUT_WINDOW_X = 0x00000064;
+	public final static int GLUT_WINDOW_Y = 0x00000065;
+	public final static int GLUT_WINDOW_WIDTH = 0x00000066;
+	public final static int GLUT_WINDOW_HEIGHT = 0x00000067;
+	public final static int GLUT_WINDOW_BUFFER_SIZE = 0x00000068;
+	public final static int GLUT_WINDOW_STENCIL_SIZE = 0x00000069;
+	public final static int GLUT_WINDOW_DEPTH_SIZE = 0x0000006A;
+	public final static int GLUT_WINDOW_RED_SIZE = 0x0000006B;
+	public final static int GLUT_WINDOW_GREEN_SIZE = 0x0000006C;
+	public final static int GLUT_WINDOW_BLUE_SIZE = 0x0000006D;
+	public final static int GLUT_WINDOW_ALPHA_SIZE = 0x0000006E;
+	public final static int GLUT_WINDOW_ACCUM_RED_SIZE = 0x0000006F;
+	public final static int GLUT_WINDOW_ACCUM_GREEN_SIZE = 0x00000070;
+	public final static int GLUT_WINDOW_ACCUM_BLUE_SIZE = 0x00000071;
+	public final static int GLUT_WINDOW_ACCUM_ALPHA_SIZE = 0x00000072;
+	public final static int GLUT_WINDOW_DOUBLEBUFFER = 0x00000073;
+	public final static int GLUT_WINDOW_RGBA = 0x00000074;
+	public final static int GLUT_WINDOW_PARENT = 0x00000075;
+	public final static int GLUT_WINDOW_NUM_CHILDREN = 0x00000076;
+	public final static int GLUT_WINDOW_COLORMAP_SIZE = 0x00000077;
+	public final static int GLUT_WINDOW_NUM_SAMPLES = 0x00000078;
+	public final static int GLUT_WINDOW_STEREO = 0x00000079;
+	public final static int GLUT_WINDOW_CURSOR = 0x0000007A;
 
-	public final int GLUT_SCREEN_WIDTH = 0x000000C8;
-	public final int GLUT_SCREEN_HEIGHT = 0x000000C9;
-	public final int GLUT_SCREEN_WIDTH_MM = 0x000000CA;
-	public final int GLUT_SCREEN_HEIGHT_MM = 0x000000CB;
-	public final int GLUT_MENU_NUM_ITEMS = 0x0000012C;
-	public final int GLUT_DISPLAY_MODE_POSSIBLE = 0x00000190;
-	public final int GLUT_INIT_WINDOW_X = 0x000001F4;
-	public final int GLUT_INIT_WINDOW_Y = 0x000001F5;
-	public final int GLUT_INIT_WINDOW_WIDTH = 0x000001F6;
-	public final int GLUT_INIT_WINDOW_HEIGHT = 0x000001F7;
-	public final int GLUT_INIT_DISPLAY_MODE = 0x000001F8;
-	public final int GLUT_ELAPSED_TIME = 0x000002BC;
-	public final int GLUT_WINDOW_FORMAT_ID = 0x0000007B;
+	public final static int GLUT_SCREEN_WIDTH = 0x000000C8;
+	public final static int GLUT_SCREEN_HEIGHT = 0x000000C9;
+	public final static int GLUT_SCREEN_WIDTH_MM = 0x000000CA;
+	public final static int GLUT_SCREEN_HEIGHT_MM = 0x000000CB;
+	public final static int GLUT_MENU_NUM_ITEMS = 0x0000012C;
+	public final static int GLUT_DISPLAY_MODE_POSSIBLE = 0x00000190;
+	public final static int GLUT_INIT_WINDOW_X = 0x000001F4;
+	public final static int GLUT_INIT_WINDOW_Y = 0x000001F5;
+	public final static int GLUT_INIT_WINDOW_WIDTH = 0x000001F6;
+	public final static int GLUT_INIT_WINDOW_HEIGHT = 0x000001F7;
+	public final static int GLUT_INIT_DISPLAY_MODE = 0x000001F8;
+	public final static int GLUT_ELAPSED_TIME = 0x000002BC;
+	public final static int GLUT_WINDOW_FORMAT_ID = 0x0000007B;
 
 	/*
 	 * GLUT API macro definitions -- the glutDeviceGet parameters
 	 */
-	public final int GLUT_HAS_KEYBOARD = 0x00000258;
-	public final int GLUT_HAS_MOUSE = 0x00000259;
-	public final int GLUT_HAS_SPACEBALL = 0x0000025A;
-	public final int GLUT_HAS_DIAL_AND_BUTTON_BOX = 0x0000025B;
-	public final int GLUT_HAS_TABLET = 0x0000025C;
-	public final int GLUT_NUM_MOUSE_BUTTONS = 0x0000025D;
-	public final int GLUT_NUM_SPACEBALL_BUTTONS = 0x0000025E;
-	public final int GLUT_NUM_BUTTON_BOX_BUTTONS = 0x0000025F;
-	public final int GLUT_NUM_DIALS = 0x00000260;
-	public final int GLUT_NUM_TABLET_BUTTONS = 0x00000261;
-	public final int GLUT_DEVICE_IGNORE_KEY_REPEAT = 0x00000262;
-	public final int GLUT_DEVICE_KEY_REPEAT = 0x00000263;
-	public final int GLUT_HAS_JOYSTICK = 0x00000264;
-	public final int GLUT_OWNS_JOYSTICK = 0x00000265;
-	public final int GLUT_JOYSTICK_BUTTONS = 0x00000266;
-	public final int GLUT_JOYSTICK_AXES = 0x00000267;
-	public final int GLUT_JOYSTICK_POLL_RATE = 0x00000268;
+	public final static int GLUT_HAS_KEYBOARD = 0x00000258;
+	public final static int GLUT_HAS_MOUSE = 0x00000259;
+	public final static int GLUT_HAS_SPACEBALL = 0x0000025A;
+	public final static int GLUT_HAS_DIAL_AND_BUTTON_BOX = 0x0000025B;
+	public final static int GLUT_HAS_TABLET = 0x0000025C;
+	public final static int GLUT_NUM_MOUSE_BUTTONS = 0x0000025D;
+	public final static int GLUT_NUM_SPACEBALL_BUTTONS = 0x0000025E;
+	public final static int GLUT_NUM_BUTTON_BOX_BUTTONS = 0x0000025F;
+	public final static int GLUT_NUM_DIALS = 0x00000260;
+	public final static int GLUT_NUM_TABLET_BUTTONS = 0x00000261;
+	public final static int GLUT_DEVICE_IGNORE_KEY_REPEAT = 0x00000262;
+	public final static int GLUT_DEVICE_KEY_REPEAT = 0x00000263;
+	public final static int GLUT_HAS_JOYSTICK = 0x00000264;
+	public final static int GLUT_OWNS_JOYSTICK = 0x00000265;
+	public final static int GLUT_JOYSTICK_BUTTONS = 0x00000266;
+	public final static int GLUT_JOYSTICK_AXES = 0x00000267;
+	public final static int GLUT_JOYSTICK_POLL_RATE = 0x00000268;
 
 	/*
 	 * GLUT API macro definitions -- the glutLayerGet parameters
 	 */
-	public final int GLUT_OVERLAY_POSSIBLE = 0x00000320;
-	public final int GLUT_LAYER_IN_USE = 0x00000321;
-	public final int GLUT_HAS_OVERLAY = 0x00000322;
-	public final int GLUT_TRANSPARENT_INDEX = 0x00000323;
-	public final int GLUT_NORMAL_DAMAGED = 0x00000324;
-	public final int GLUT_OVERLAY_DAMAGED = 0x00000325;
+	public final static int GLUT_OVERLAY_POSSIBLE = 0x00000320;
+	public final static int GLUT_LAYER_IN_USE = 0x00000321;
+	public final static int GLUT_HAS_OVERLAY = 0x00000322;
+	public final static int GLUT_TRANSPARENT_INDEX = 0x00000323;
+	public final static int GLUT_NORMAL_DAMAGED = 0x00000324;
+	public final static int GLUT_OVERLAY_DAMAGED = 0x00000325;
 
 	/*
 	 * GLUT API macro definitions -- the glutVideoResizeGet parameters
 	 */
-	public final int GLUT_VIDEO_RESIZE_POSSIBLE = 0x00000384;
-	public final int GLUT_VIDEO_RESIZE_IN_USE = 0x00000385;
-	public final int GLUT_VIDEO_RESIZE_X_DELTA = 0x00000386;
-	public final int GLUT_VIDEO_RESIZE_Y_DELTA = 0x00000387;
-	public final int GLUT_VIDEO_RESIZE_WIDTH_DELTA = 0x00000388;
-	public final int GLUT_VIDEO_RESIZE_HEIGHT_DELTA = 0x00000389;
-	public final int GLUT_VIDEO_RESIZE_X = 0x0000038A;
-	public final int GLUT_VIDEO_RESIZE_Y = 0x0000038B;
-	public final int GLUT_VIDEO_RESIZE_WIDTH = 0x0000038C;
-	public final int GLUT_VIDEO_RESIZE_HEIGHT = 0x0000038D;
+	public final static int GLUT_VIDEO_RESIZE_POSSIBLE = 0x00000384;
+	public final static int GLUT_VIDEO_RESIZE_IN_USE = 0x00000385;
+	public final static int GLUT_VIDEO_RESIZE_X_DELTA = 0x00000386;
+	public final static int GLUT_VIDEO_RESIZE_Y_DELTA = 0x00000387;
+	public final static int GLUT_VIDEO_RESIZE_WIDTH_DELTA = 0x00000388;
+	public final static int GLUT_VIDEO_RESIZE_HEIGHT_DELTA = 0x00000389;
+	public final static int GLUT_VIDEO_RESIZE_X = 0x0000038A;
+	public final static int GLUT_VIDEO_RESIZE_Y = 0x0000038B;
+	public final static int GLUT_VIDEO_RESIZE_WIDTH = 0x0000038C;
+	public final static int GLUT_VIDEO_RESIZE_HEIGHT = 0x0000038D;
 
 	/*
 	 * GLUT API macro definitions -- the glutUseLayer parameters
 	 */
-	public final int GLUT_NORMAL = 0x00000000;
-	public final int GLUT_OVERLAY = 0x00000001;
+	public final static int GLUT_NORMAL = 0x00000000;
+	public final static int GLUT_OVERLAY = 0x00000001;
 
 	/*
 	 * GLUT API macro definitions -- the glutGetModifiers parameters
 	 */
-	public final int GLUT_ACTIVE_SHIFT = 0x00000001;
-	public final int GLUT_ACTIVE_CTRL = 0x00000002;
-	public final int GLUT_ACTIVE_ALT = 0x00000004;
+	public final static int GLUT_ACTIVE_SHIFT = 0x00000001;
+	public final static int GLUT_ACTIVE_CTRL = 0x00000002;
+	public final static int GLUT_ACTIVE_ALT = 0x00000004;
 
 	/*
 	 * GLUT API macro definitions -- the glutSetCursor parameters
 	 */
-	public final int GLUT_CURSOR_RIGHT_ARROW = 0x00000000;
-	public final int GLUT_CURSOR_LEFT_ARROW = 0x00000001;
-	public final int GLUT_CURSOR_INFO = 0x00000002;
-	public final int GLUT_CURSOR_DESTROY = 0x00000003;
-	public final int GLUT_CURSOR_HELP = 0x00000004;
-	public final int GLUT_CURSOR_CYCLE = 0x00000005;
-	public final int GLUT_CURSOR_SPRAY = 0x00000006;
-	public final int GLUT_CURSOR_WAIT = 0x00000007;
-	public final int GLUT_CURSOR_TEXT = 0x00000008;
-	public final int GLUT_CURSOR_CROSSHAIR = 0x00000009;
-	public final int GLUT_CURSOR_UP_DOWN = 0x0000000A;
-	public final int GLUT_CURSOR_LEFT_RIGHT = 0x0000000B;
-	public final int GLUT_CURSOR_TOP_SIDE = 0x0000000C;
-	public final int GLUT_CURSOR_BOTTOM_SIDE = 0x0000000D;
-	public final int GLUT_CURSOR_LEFT_SIDE = 0x0000000E;
-	public final int GLUT_CURSOR_RIGHT_SIDE = 0x0000000F;
-	public final int GLUT_CURSOR_TOP_LEFT_CORNER = 0x00000010;
-	public final int GLUT_CURSOR_TOP_RIGHT_CORNER = 0x00000011;
-	public final int GLUT_CURSOR_BOTTOM_RIGHT_CORNER = 0x00000012;
-	public final int GLUT_CURSOR_BOTTOM_LEFT_CORNER = 0x00000013;
-	public final int GLUT_CURSOR_INHERIT = 0x00000064;
-	public final int GLUT_CURSOR_NONE = 0x00000065;
-	public final int GLUT_CURSOR_FULL_CROSSHAIR = 0x00000066;
+	public final static int GLUT_CURSOR_RIGHT_ARROW = 0x00000000;
+	public final static int GLUT_CURSOR_LEFT_ARROW = 0x00000001;
+	public final static int GLUT_CURSOR_INFO = 0x00000002;
+	public final static int GLUT_CURSOR_DESTROY = 0x00000003;
+	public final static int GLUT_CURSOR_HELP = 0x00000004;
+	public final static int GLUT_CURSOR_CYCLE = 0x00000005;
+	public final static int GLUT_CURSOR_SPRAY = 0x00000006;
+	public final static int GLUT_CURSOR_WAIT = 0x00000007;
+	public final static int GLUT_CURSOR_TEXT = 0x00000008;
+	public final static int GLUT_CURSOR_CROSSHAIR = 0x00000009;
+	public final static int GLUT_CURSOR_UP_DOWN = 0x0000000A;
+	public final static int GLUT_CURSOR_LEFT_RIGHT = 0x0000000B;
+	public final static int GLUT_CURSOR_TOP_SIDE = 0x0000000C;
+	public final static int GLUT_CURSOR_BOTTOM_SIDE = 0x0000000D;
+	public final static int GLUT_CURSOR_LEFT_SIDE = 0x0000000E;
+	public final static int GLUT_CURSOR_RIGHT_SIDE = 0x0000000F;
+	public final static int GLUT_CURSOR_TOP_LEFT_CORNER = 0x00000010;
+	public final static int GLUT_CURSOR_TOP_RIGHT_CORNER = 0x00000011;
+	public final static int GLUT_CURSOR_BOTTOM_RIGHT_CORNER = 0x00000012;
+	public final static int GLUT_CURSOR_BOTTOM_LEFT_CORNER = 0x00000013;
+	public final static int GLUT_CURSOR_INHERIT = 0x00000064;
+	public final static int GLUT_CURSOR_NONE = 0x00000065;
+	public final static int GLUT_CURSOR_FULL_CROSSHAIR = 0x00000066;
 
 	/*
 	 * GLUT API macro definitions -- RGB color component specification definitions
 	 */
-	public final int GLUT_RED = 0x00000000;
-	public final int GLUT_GREEN = 0x00000001;
-	public final int GLUT_BLUE = 0x00000002;
+	public final static int GLUT_RED = 0x00000000;
+	public final static int GLUT_GREEN = 0x00000001;
+	public final static int GLUT_BLUE = 0x00000002;
 
 	/*
 	 * GLUT API macro definitions -- additional keyboard and joystick definitions
 	 */
-	public final int GLUT_KEY_REPEAT_OFF = 0x00000000;
-	public final int GLUT_KEY_REPEAT_ON = 0x00000001;
-	public final int GLUT_KEY_REPEAT_DEFAULT = 0x00000002;
+	public final static int GLUT_KEY_REPEAT_OFF = 0x00000000;
+	public final static int GLUT_KEY_REPEAT_ON = 0x00000001;
+	public final static int GLUT_KEY_REPEAT_DEFAULT = 0x00000002;
 
-	public final int GLUT_JOYSTICK_BUTTON_A = 0x00000001;
-	public final int GLUT_JOYSTICK_BUTTON_B = 0x00000002;
-	public final int GLUT_JOYSTICK_BUTTON_C = 0x00000004;
-	public final int GLUT_JOYSTICK_BUTTON_D = 0x00000008;
+	public final static int GLUT_JOYSTICK_BUTTON_A = 0x00000001;
+	public final static int GLUT_JOYSTICK_BUTTON_B = 0x00000002;
+	public final static int GLUT_JOYSTICK_BUTTON_C = 0x00000004;
+	public final static int GLUT_JOYSTICK_BUTTON_D = 0x00000008;
 
 	/*
 	 * GLUT API macro definitions -- game mode definitions
 	 */
-	public final int GLUT_GAME_MODE_ACTIVE = 0x00000000;
-	public final int GLUT_GAME_MODE_POSSIBLE = 0x00000001;
-	public final int GLUT_GAME_MODE_WIDTH = 0x00000002;
-	public final int GLUT_GAME_MODE_HEIGHT = 0x00000003;
-	public final int GLUT_GAME_MODE_PIXEL_DEPTH = 0x00000004;
-	public final int GLUT_GAME_MODE_REFRESH_RATE = 0x00000005;
-	public final int GLUT_GAME_MODE_DISPLAY_CHANGED = 0x00000006;
+	public final static int GLUT_GAME_MODE_ACTIVE = 0x00000000;
+	public final static int GLUT_GAME_MODE_POSSIBLE = 0x00000001;
+	public final static int GLUT_GAME_MODE_WIDTH = 0x00000002;
+	public final static int GLUT_GAME_MODE_HEIGHT = 0x00000003;
+	public final static int GLUT_GAME_MODE_PIXEL_DEPTH = 0x00000004;
+	public final static int GLUT_GAME_MODE_REFRESH_RATE = 0x00000005;
+	public final static int GLUT_GAME_MODE_DISPLAY_CHANGED = 0x00000006;
 
 	/*
 	 * GLUT API Extension macro definitions -- behaviour when the user clicks on an "x" to close a window
 	 */
-	public final int GLUT_ACTION_EXIT                	= 0;
-	public final int GLUT_ACTION_GLUTMAINLOOP_RETURNS 	= 1;
-	public final int GLUT_ACTION_CONTINUE_EXECUTION     = 2;
+	public final static int GLUT_ACTION_EXIT                	= 0;
+	public final static int GLUT_ACTION_GLUTMAINLOOP_RETURNS 	= 1;
+	public final static int GLUT_ACTION_CONTINUE_EXECUTION     = 2;
 
 	/*
 	 * GLUT API Extension macro definitions -- the glutGet parameters
 	 */
-	public final int  GLUT_INIT_STATE                    = 0x007C;
-	public final int  GLUT_ACTION_ON_WINDOW_CLOSE        = 0x01F9;
-	public final int  GLUT_WINDOW_BORDER_WIDTH           = 0x01FA;
-	public final int  GLUT_WINDOW_BORDER_HEIGHT          = 0x01FB;
-	public final int  GLUT_WINDOW_HEADER_HEIGHT          = 0x01FB;  /* Docs say it should always have been GLUT_WINDOW_BORDER_HEIGHT, keep this for backward compatibility */
-	public final int  GLUT_VERSION                       = 0x01FC;
-	public final int  GLUT_RENDERING_CONTEXT             = 0x01FD;
-	public final int  GLUT_DIRECT_RENDERING              = 0x01FE;
-	public final int  GLUT_FULL_SCREEN                   = 0x01FF;
-	public final int  GLUT_SKIP_STALE_MOTION_EVENTS      = 0x0204;
-	public final int  GLUT_GEOMETRY_VISUALIZE_NORMALS    = 0x0205;
-	public final int  GLUT_STROKE_FONT_DRAW_JOIN_DOTS    = 0x0206;  /* Draw dots between line segments of stroke fonts? */
+	public final static int  GLUT_INIT_STATE                    = 0x007C;
+	public final static int  GLUT_ACTION_ON_WINDOW_CLOSE        = 0x01F9;
+	public final static int  GLUT_WINDOW_BORDER_WIDTH           = 0x01FA;
+	public final static int  GLUT_WINDOW_BORDER_HEIGHT          = 0x01FB;
+	public final static int  GLUT_WINDOW_HEADER_HEIGHT          = 0x01FB;  /* Docs say it should always have been GLUT_WINDOW_BORDER_HEIGHT, keep this for backward compatibility */
+	public final static int  GLUT_VERSION                       = 0x01FC;
+	public final static int  GLUT_RENDERING_CONTEXT             = 0x01FD;
+	public final static int  GLUT_DIRECT_RENDERING              = 0x01FE;
+	public final static int  GLUT_FULL_SCREEN                   = 0x01FF;
+	public final static int  GLUT_SKIP_STALE_MOTION_EVENTS      = 0x0204;
+	public final static int  GLUT_GEOMETRY_VISUALIZE_NORMALS    = 0x0205;
+	public final static int  GLUT_STROKE_FONT_DRAW_JOIN_DOTS    = 0x0206;  /* Draw dots between line segments of stroke fonts? */
 
 	/*
 	 * Initialization functions, see fglut_init.c
