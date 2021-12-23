@@ -23,15 +23,6 @@ public class glut extends glu {
 		return "0.1.6";
 	}
 	
-	static {
-		if (System.getProperty("os.name").contains("Windows")) {
-			load("/libglut-0.dll");
-			load("/libjglut.dll");
-		} else { // Assumes Linux
-			load("/libjglut.so");
-		}
-	}
-
 	final static boolean debug = false;  // This debug flag is strictly for debugging in glut.java.  Change it explicitly.
 
 	/**
@@ -122,6 +113,15 @@ public class glut extends glu {
 			System.out.println("URISyntaxException getting resource as stream: " + resourcePath);
 			use.printStackTrace(System.err);
 			System.exit(1);
+		}
+	}
+	
+	static {
+		if (System.getProperty("os.name").contains("Windows")) {
+			load("/libglut-0.dll");
+			load("/libjglut.dll");
+		} else { // Assumes Linux
+			load("/libjglut.so");
 		}
 	}
 	
