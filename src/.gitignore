@@ -22,3 +22,5 @@ libtool
 /com_pflager_glut.h
 /libjglut.dll
 /libjglut.so
+/net_pflager_gles2_JNI.h
+/Java_net_pflager_gles2_JNI.c
