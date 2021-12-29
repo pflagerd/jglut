@@ -10,6 +10,7 @@ CPPFLAGS=\
 	-g3\
 	-m64\
 	-Wall\
+	-Werror\
 	-I$(directory_containing_this_makefile)include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include/linux\
@@ -64,23 +65,23 @@ bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 
 # .generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
 	
-linux-build/.libs/libjglut.so: linux-build/Makefile .generatedHeadersAndCompiledJava $(wildcard src/*.c src/*.h)
+linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 
-windows-build/.libs/libjglut.dll: windows-build/Makefile .generatedHeadersAndCompiledJava $(wildcard src/*.c src/*.h)
+windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
 
-.generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) makefile | bin/
+src/net_pflager_gles2_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gles2.java makefile | bin/
 	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java)
-	touch .generatedHeadersAndCompiledJava
+	touch src/net_pflager_gles2_JNI.h
 
-src/net_pflager_gles2_JNI.h: src/net/pflager/gles2.java
-
-src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java
-
-src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml
-	jdk1.8.0_72/bin/javac -g -parameters -d bin -cp jar/commons-io-2.6.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
+src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java makefile
 	jdk1.8.0_72/jre/bin/java -cp ../GenerateGLCode/bin org.pflager.JavaAndCJniCodeGenerator
+	touch src/Java_net_pflager_gles2_JNI.c
+
+src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile
+	jdk1.8.0_72/bin/javac -g -parameters -d bin -cp jar/commons-io-2.6.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
+	touch src/net/pflager/gles2.java
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
