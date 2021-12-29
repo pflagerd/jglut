@@ -156,6 +156,7 @@ clean:
 	rm -f src/com_pflager_gl.h
 	rm -f src/com_pflager_glu.h
 	rm -f src/com_pflager_glut.h
+	rm -f src/net/pflager/gles2.java
 	rm -rf src/autom4te.cache/
 	rm -rf src/config/
 	rm -rf src/m4/
