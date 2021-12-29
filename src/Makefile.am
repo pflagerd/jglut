@@ -474,4 +474,5 @@ Java_com_pflager_glut_glutWireTeacup.c\
 Java_com_pflager_glut_glutWireTeapot.c\
 Java_com_pflager_glut_glutWireTeaspoon.c\
 Java_com_pflager_glut_glutWireTetrahedron.c\
-Java_com_pflager_glut_glutWireTorus.c
+Java_com_pflager_glut_glutWireTorus.c\
+Java_net_pflager_gles2_JNI.c

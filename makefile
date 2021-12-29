@@ -34,7 +34,7 @@ all: jar/jglut.jar
 
 .PHONY: check
 check: all
-	jdk1.8.0_72/bin/javac -g -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo jar/*.jar | tr ' ' ':'`
+	jdk1.8.0_72/bin/javac -g -parameters -d bin test/org/pflager/*.java test/org/pflager/gl/*.java -cp jar/jglut.jar:`echo jar/*.jar | tr ' ' ':'`
 	jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --scan-classpath
 	#jdk1.8.0_72/bin/java -jar jar/junit-platform-console-standalone-1.8.1.jar -cp bin --select-class org.pflager.AllTests
 
@@ -71,8 +71,16 @@ windows-build/.libs/libjglut.dll: windows-build/Makefile .generatedHeadersAndCom
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
 
 .generatedHeadersAndCompiledJava: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) makefile | bin/
-	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java)
+	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java)
 	touch .generatedHeadersAndCompiledJava
+
+src/net_pflager_gles2_JNI.h: src/net/pflager/gles2.java
+
+src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java
+
+src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml
+	jdk1.8.0_72/bin/javac -g -parameters -d bin -cp jar/commons-io-2.6.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
+	jdk1.8.0_72/jre/bin/java -cp ../GenerateGLCode/bin org.pflager.JavaAndCJniCodeGenerator
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
@@ -84,10 +92,8 @@ jdk-8u72-linux-x64.tar.gz:
 linux-build/Makefile: src/configure lib64/libglut.a | linux-build
 	cd linux-build; ../src/configure --prefix=$(directory_containing_this_makefile) WIN32= CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS_LIN)"
 
-
 windows-build/Makefile: src/configure | windows-build .mingw64-cross-gcc .mingw64-freeglut-devel
 	cd windows-build; ../src/configure --host=x86_64-w64-mingw32 --prefix=$(directory_containing_this_makefile) WIN32=win32-dll CPPFLAGS="$(CPPFLAGS) -DGLUT_DISABLE_ATEXIT_HACK" LDFLAGS="$(LDFLAGS_WIN)"
-
 
 src/configure: src/configure.ac src/Makefile.am makefile lib64/libglut.a | .autoconf .automake .libtool /usr/lib64/libXrandr.so /usr/lib64/libXxf86vm.so .version
 	@printf '\nExecuting target: src/configure\n'
@@ -156,6 +162,7 @@ clean:
 	rm -f src/com_pflager_gl.h
 	rm -f src/com_pflager_glu.h
 	rm -f src/com_pflager_glut.h
+	rm -f src/net_pflager_gles2.h
 	rm -f src/net/pflager/gles2.java
 	rm -rf src/autom4te.cache/
 	rm -rf src/config/
