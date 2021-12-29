@@ -8,6 +8,7 @@ else
 endif
 
 libjglut_la_SOURCES =\
+Java_net_pflager_gles2_JNI.c\
 _DPRINTF_.c\
 array_length_from_pname.c\
 arrayOfDoublesToString.c\
@@ -474,5 +475,4 @@ Java_com_pflager_glut_glutWireTeacup.c\
 Java_com_pflager_glut_glutWireTeapot.c\
 Java_com_pflager_glut_glutWireTeaspoon.c\
 Java_com_pflager_glut_glutWireTetrahedron.c\
-Java_com_pflager_glut_glutWireTorus.c\
-Java_net_pflager_gles2_JNI.c
+Java_com_pflager_glut_glutWireTorus.c
