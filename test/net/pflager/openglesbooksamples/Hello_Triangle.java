@@ -80,7 +80,7 @@ public class Hello_Triangle extends glut implements gles2 {
 	///
 	// Initialize the shader and program object
 	//
-	int Init ( )
+	boolean Init ( )
 	{
 	   String vShaderStr =
 	      "attribute vec4 vPosition;    \n" +
@@ -104,7 +104,7 @@ public class Hello_Triangle extends glut implements gles2 {
 	   int programObject = glCreateProgram ( );
 	   
 	   if ( programObject == 0 )
-	      return 0;
+	      return false;
 	
 	   glAttachShader ( programObject, vertexShader );
 	   glAttachShader ( programObject, fragmentShader );
@@ -135,14 +135,14 @@ public class Hello_Triangle extends glut implements gles2 {
 	      }
 	
 	      glDeleteProgram ( programObject );
-	      return GL_FALSE;
+	      return false;
 	   }
 	
 	   // Store the program object
 	   userData.programObject = programObject;
 	
 	   glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
-	   return GL_TRUE;
+	   return true;
 	}
 
 	///
