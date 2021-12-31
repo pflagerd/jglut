@@ -8,7 +8,7 @@ else
 endif
 
 libjglut_la_SOURCES =\
-Java_net_pflager_gles2_JNI.c\
+ifdef(WIN32,, Java_net_pflager_gles2_JNI.c)\
 _DPRINTF_.c\
 array_length_from_pname.c\
 arrayOfDoublesToString.c\

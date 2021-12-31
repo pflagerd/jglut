@@ -66,19 +66,18 @@ bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 
-windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
+windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h)
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
 
 src/net_pflager_gles2_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gles2.java makefile | bin/
 	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java)
 	touch src/net_pflager_gles2_JNI.h
 
-src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java makefile
-	jdk1.8.0_72/jre/bin/java -cp ../GenerateGLCode/bin org.pflager.JavaAndCJniCodeGenerator
-	touch src/Java_net_pflager_gles2_JNI.c
+src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java makefile jdk1.8.0_72/bin/javac
+	jdk1.8.0_72/jre/bin/java -cp ../GenerateGLCode/bin:../GenerateGLCode/jar/commons-io-2.6.jar:../GenerateGLCode/jar/commons-lang3-3.8.1.jar org.pflager.JavaAndCJniCodeGenerator
 
-src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile
-	jdk1.8.0_72/bin/javac -g -parameters -d bin -cp jar/commons-io-2.6.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
+src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
+	jdk1.8.0_72/bin/javac -g -parameters -d ../GenerateGLCode/bin -cp ../GenerateGLCode/jar/commons-io-2.6.jar:../GenerateGLCode/jar/commons-lang3-3.8.1.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
 	touch src/net/pflager/gles2.java
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
