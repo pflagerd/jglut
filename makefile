@@ -63,8 +63,6 @@ bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 	cp windows-build/.libs/libjglut.dll src/libjglut.dll # we do this because eclipse JDT will attempt to erase bin, rebuild bin and recopy from src
 	touch bin/libjglut.dll # this may be unnecessary
 
-# .generatedHeadersAndCompiledJava stands for src/com_pflager_glut.h src/com_pflager_glu.h src/com_pflager_gl.h bin/com
-	
 linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 
@@ -156,7 +154,6 @@ windows-build:
 
 .PHONY: clean
 clean:
-	rm -f .generatedHeadersAndCompiledJava
 	rm -f lib/jglut.jar
 	rm -rf lib64/
 	rm -rf bin/
