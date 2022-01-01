@@ -135,7 +135,7 @@ windows-build:
 
 
 .libtool:
-	@version=$$(libtool --version | head -1 ); if [ "$$version" == "2.4.6" ]; then echo $$version > .libtool; else echo "libtool 2.4.6 not found or wrong version"; sudo zypper install -y libtool; fi
+	@version=($$(libtool --version)); if [ "$${version[3]}" == "2.4.6" ]; then echo $${version[3]} > .libtool; else echo "libtool 2.4.6 not found or wrong version"; sudo zypper install -y libtool; fi
 
 .mingw64-cross-gcc:
 	@version=($$(x86_64-w64-mingw32-gcc --version | head -1)); if [ "$${version[3]}" == "9.2.0" ]; then echo $${version[3]} > .mingw64-cross-gcc; else echo "mingw64-cross-gcc 9.2.0 not found or wrong version"; sudo zypper install -y mingw64-cross-gcc; fi
