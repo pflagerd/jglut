@@ -43,11 +43,11 @@ package net.pflager.redbook1_1;
  */
 import com.pflager.glut;
 
-public class hello extends glut implements net.pflager.gl {
+public class hello extends glut implements net.pflager.glExperimental {
 
 	void display() {
 		/* clear all pixels */
-		jni.(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		/*
 		 * draw white polygon (rectangle) with corners at (0.25, 0.25, 0.0) and (0.75,

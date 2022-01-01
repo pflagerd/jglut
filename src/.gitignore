@@ -24,3 +24,5 @@ libtool
 /libjglut.so
 /net_pflager_gles2_JNI.h
 /Java_net_pflager_gles2_JNI.c
+/Java_net_pflager_gl_JNI.c
+/net_pflager_gl_JNI.h
