@@ -1,4 +1,4 @@
-package net.pflager.gl.redbook1_1;
+package net.pflager.redbook1_1;
 
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
@@ -43,11 +43,11 @@ package net.pflager.gl.redbook1_1;
  */
 import com.pflager.glut;
 
-public class hello extends glut {
+public class hello extends glut implements net.pflager.gl {
 
 	void display() {
 		/* clear all pixels */
-		glClear(GL_COLOR_BUFFER_BIT);
+		jni.(GL_COLOR_BUFFER_BIT);
 
 		/*
 		 * draw white polygon (rectangle) with corners at (0.25, 0.25, 0.0) and (0.75,
