@@ -11,6 +11,7 @@ CPPFLAGS=\
 	-m64\
 	-Wall\
 	-Werror\
+	-fPIC\
 	-I$(directory_containing_this_makefile)include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include\
 	-I$(directory_containing_this_makefile)jdk1.8.0_72/include/linux\
@@ -64,7 +65,7 @@ bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 	touch bin/libjglut.dll # this may be unnecessary
 
 linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/com_pflager_gl.h src/com_pflager_glu.h src/com_pflager_glut.h src/net_pflager_gl_JNI.h src/Java_net_pflager_gl_JNI.c
-	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
+	cd linux-build; time $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 
 windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h) src/com_pflager_gl.h src/com_pflager_glu.h src/com_pflager_glut.h src/net_pflager_gl_JNI.h src/Java_net_pflager_gl_JNI.c
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
@@ -193,8 +194,12 @@ clean:
 	
 .PHONY: maxclean
 maxclean: clean
-rm -rf jdk-8u72-linux-x64.tar.gz
+	rm -rf jdk-8u72-linux-x64.tar.gz
 	rm -rf jdk1.8.0_72
 	cd freeglut-3.2.1; git clean -dfx
-	
-	
+
+.PHONY: test
+test:
+	time gcc src/_DPRINTF_.c $(wildcard src/array*.c) $(wildcard src/Java_com_pflager_gl_*.c) $(CPPFLAGS) $(LDFLAGS_LIN) -shared -o libglut.so
+
+
