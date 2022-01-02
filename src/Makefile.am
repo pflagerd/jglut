@@ -8,12 +8,13 @@ else
 endif
 
 libjglut_la_SOURCES =\
-ifdef(WIN32,, Java_net_pflager_gles2_JNI.c)\
 _DPRINTF_.c\
 array_length_from_pname.c\
 arrayOfDoublesToString.c\
 arrayOfFloatsToString.c\
 arrayOfPointersToString.c\
+Java_net_pflager_gl_JNI.c\
+ifdef(WIN32,, Java_net_pflager_gles2_JNI.c)\
 Java_com_pflager_gl_DisposeResources.c\
 Java_com_pflager_gl_glAccum__ID.c\
 Java_com_pflager_gl_glAccum__IF.c\
