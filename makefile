@@ -20,7 +20,7 @@ CPPFLAGS=\
 LDFLAGS_LIN=\
 	-Wl,--no-as-needed\
 	-Wl,--start-group\
-	$(directory_containing_this_makefile)lib64/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi\
+	$(directory_containing_this_makefile)lib64/libglut.a -lGLU -lGL -lX11 -lXrandr -lXxf86vm -lXi -lm\
 	-Wl,--end-group -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 	
 LDFLAGS_WIN=\
@@ -200,6 +200,6 @@ maxclean: clean
 
 .PHONY: test
 test:
-	time gcc src/_DPRINTF_.c $(wildcard src/array*.c) $(wildcard src/Java_com_pflager_gl_*.c) $(CPPFLAGS) $(LDFLAGS_LIN) -shared -o libglut.so
+	time gcc $(wildcard src/*.c) $(CPPFLAGS) $(LDFLAGS_LIN) -shared -o libglut.so
 
 
