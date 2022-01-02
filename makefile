@@ -83,10 +83,10 @@ src/net_pflager_gl.h: src/net_pflager_gl_JNI.h
 src/Java_net_pflager_gl_JNI.c: src/net_pflager_gl_JNI.h
 	# Similar to what's described in NOTE A below
 
-src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java src/net_pflager_gles2_JNI.h
-	# NOTE A
-	# src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c are generated at the same time.
-	# If I put both src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c as targets in the rule that currently generates only src/net/pflager/gles2.java, make will execute that rule's recipe twice (once unnecessarily)
+#src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java src/net_pflager_gles2_JNI.h
+#	# NOTE A
+#	# src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c are generated at the same time.
+#	# If I put both src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c as targets in the rule that currently generates only src/net/pflager/gles2.java, make will execute that rule's recipe twice (once unnecessarily)
 
 src/net_pflager_gl_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java makefile | bin/
 	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java
@@ -95,9 +95,9 @@ src/net/pflager/gl.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/
 	cd ../GenerateGLCode; $(MAKE)
 	../GenerateGLCode/bin/GenerateGLCode src net.pflager gl 1.0 1.1
 
-src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
-	cd ../GenerateGLCode; $(MAKE)
-	../GenerateGLCode/bin/GenerateGLCode src net.pflager gles2 3.0
+#src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
+#	cd ../GenerateGLCode; $(MAKE)
+#	../GenerateGLCode/bin/GenerateGLCode src net.pflager gles2 3.0
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
