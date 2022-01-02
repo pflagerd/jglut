@@ -71,6 +71,9 @@ windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
 
 
+src/com_pflager_glut.h: src/net_pflager_gl_JNI.h
+	# Similar to what's described in NOTE A below
+
 src/com_pflager_glu.h: src/net_pflager_gl_JNI.h
 	# Similar to what's described in NOTE A below
 
@@ -88,8 +91,8 @@ src/Java_net_pflager_gl_JNI.c: src/net_pflager_gl_JNI.h
 #	# src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c are generated at the same time.
 #	# If I put both src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c as targets in the rule that currently generates only src/net/pflager/gles2.java, make will execute that rule's recipe twice (once unnecessarily)
 
-src/net_pflager_gl_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java makefile | bin/
-	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java
+src/net_pflager_gl_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/com/pflager/glut.java src/com/pflager/glu.java src/com/pflager/gl.java src/net/pflager/gl.java makefile | bin/
+	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/com/pflager/glut.java src/com/pflager/glu.java src/com/pflager/gl.java src/net/pflager/gl.java
 
 src/net/pflager/gl.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
 	cd ../GenerateGLCode; $(MAKE)
@@ -117,12 +120,12 @@ src/configure: src/configure.ac src/Makefile.am makefile lib64/libglut.a | .auto
 	cd src; autoreconf --force --install 2>/dev/null # the 2>/dev/null is to suppress info that eclipse thinks are errors
 	touch src/configure
 
-lib64/libglut.a: freeglut-3.2.1/build/ | .cmake
-	cd freeglut-3.2.1/build/; cmake -DCMAKE_INSTALL_PREFIX:PATH=$(directory_containing_this_makefile) ..; make -j $(PROCESSES); make install
+lib64/libglut.a: freeglut-3.2.1/linux-build/ | .cmake
+	cd freeglut-3.2.1/linux-build/; cmake -DCMAKE_INSTALL_PREFIX:PATH=$(directory_containing_this_makefile) ..; make -j $(PROCESSES); make install
 	touch lib64/libglut.a
 	
-freeglut-3.2.1/build/: freeglut-3.2.1/
-	mkdir freeglut-3.2.1/build/
+freeglut-3.2.1/linux-build/: freeglut-3.2.1/
+	mkdir freeglut-3.2.1/linux-build/
 
 freeglut-3.2.1/:
 	git clone git@gitlab.pflager.net:jglut/freeglut-3.2.1.git
