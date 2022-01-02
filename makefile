@@ -63,22 +63,40 @@ bin/libjglut.dll: windows-build/.libs/libjglut.dll | bin/
 	cp windows-build/.libs/libjglut.dll src/libjglut.dll # we do this because eclipse JDT will attempt to erase bin, rebuild bin and recopy from src
 	touch bin/libjglut.dll # this may be unnecessary
 
-linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/net_pflager_gles2_JNI.h src/Java_net_pflager_gles2_JNI.c
+linux-build/.libs/libjglut.so: linux-build/Makefile $(wildcard src/*.c src/*.h) src/com_pflager_gl.h src/com_pflager_glu.h src/com_pflager_glut.h src/net_pflager_gl_JNI.h src/Java_net_pflager_gl_JNI.c
 	cd linux-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.so
 
-windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h)
+windows-build/.libs/libjglut.dll: windows-build/Makefile $(wildcard src/*.c src/*.h) src/com_pflager_gl.h src/com_pflager_glu.h src/com_pflager_glut.h src/net_pflager_gl_JNI.h src/Java_net_pflager_gl_JNI.c
 	cd windows-build; $(MAKE) -j $(PROCESSES) && touch .libs/libjglut.dll
 
-src/net_pflager_gles2_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gles2.java makefile | bin/
-	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java)
-	touch src/net_pflager_gles2_JNI.h
 
-src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java makefile jdk1.8.0_72/bin/javac
-	jdk1.8.0_72/jre/bin/java -cp ../GenerateGLCode/bin:../GenerateGLCode/jar/commons-io-2.6.jar:../GenerateGLCode/jar/commons-lang3-3.8.1.jar org.pflager.JavaAndCJniCodeGenerator
+src/com_pflager_glu.h: src/net_pflager_gl_JNI.h
+	# Similar to what's described in NOTE A below
+
+src/com_pflager_gl.h: src/net_pflager_gl_JNI.h
+	# Similar to what's described in NOTE A below
+
+src/net_pflager_gl.h: src/net_pflager_gl_JNI.h
+	# Similar to what's described in NOTE A below
+
+src/Java_net_pflager_gl_JNI.c: src/net_pflager_gl_JNI.h
+	# Similar to what's described in NOTE A below
+
+src/Java_net_pflager_gles2_JNI.c: src/net/pflager/gles2.java src/net_pflager_gles2_JNI.h
+	# NOTE A
+	# src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c are generated at the same time.
+	# If I put both src/net/pflager/gles2.java and src/Java_net_pflager_gles2_JNI.c as targets in the rule that currently generates only src/net/pflager/gles2.java, make will execute that rule's recipe twice (once unnecessarily)
+
+src/net_pflager_gl_JNI.h: jdk1.8.0_72/bin/javac $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java makefile | bin/
+	jdk1.8.0_72/bin/javac -parameters -g -d bin -h src $(wildcard src/com/pflager/*.java) $(wildcard src/net/pflager/*.java) src/net/pflager/gl.java
+
+src/net/pflager/gl.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
+	cd ../GenerateGLCode; $(MAKE)
+	../GenerateGLCode/bin/GenerateGLCode src net.pflager gl 1.0 1.1
 
 src/net/pflager/gles2.java: ../OpenGL-Registry/xml/gl.xml makefile jdk1.8.0_72/bin/javac
-	jdk1.8.0_72/bin/javac -g -parameters -d ../GenerateGLCode/bin -cp ../GenerateGLCode/jar/commons-io-2.6.jar:../GenerateGLCode/jar/commons-lang3-3.8.1.jar $(wildcard ../GenerateGLCode/src/org/pflager/*.java)
-	touch src/net/pflager/gles2.java
+	cd ../GenerateGLCode; $(MAKE)
+	../GenerateGLCode/bin/GenerateGLCode src net.pflager gles2 3.0
 
 jdk1.8.0_72/bin/javac: jdk-8u72-linux-x64.tar.gz
 	tar xzf jdk-8u72-linux-x64.tar.gz && touch jdk1.8.0_72/bin/javac
@@ -159,6 +177,8 @@ clean:
 	rm -f src/com_pflager_gl.h
 	rm -f src/com_pflager_glu.h
 	rm -f src/com_pflager_glut.h
+	rm -f src/net_pflager_gl.h
+	rm -f src/net/pflager/gl.java
 	rm -f src/net_pflager_gles2.h
 	rm -f src/net/pflager/gles2.java
 	rm -rf src/autom4te.cache/
