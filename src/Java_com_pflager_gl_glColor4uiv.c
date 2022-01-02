@@ -27,7 +27,7 @@ JNIEXPORT void JNICALL Java_com_pflager_gl_glColor4uiv(JNIEnv *env, jobject obje
 
     jint* jintArrayElements = (*env)->GetIntArrayElements(env, vJIntArray, NULL);
 
-    glColor4uiv(jintArrayElements);
+    glColor4uiv((const GLuint *)jintArrayElements);
 
 	(*env)->ReleaseIntArrayElements(env, vJIntArray, jintArrayElements, 0); // release resources
 }

@@ -27,7 +27,7 @@ JNIEXPORT void JNICALL Java_com_pflager_gl_glColor3usv(JNIEnv *env, jobject obje
 
     jshort* jshortArrayElements = (*env)->GetShortArrayElements(env, vJShortArray, NULL);
 
-    glColor3usv(jshortArrayElements);
+    glColor3usv((const GLushort *)jshortArrayElements);
 
 	(*env)->ReleaseShortArrayElements(env, vJShortArray, jshortArrayElements, 0); // release resources
 }

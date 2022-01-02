@@ -27,7 +27,7 @@ JNIEXPORT void JNICALL Java_com_pflager_gl_glColor4ubv(JNIEnv *env, jobject obje
 
     jbyte* jbyteArrayElements = (*env)->GetByteArrayElements(env, vJByteArray, NULL);
 
-    glColor4ubv(jbyteArrayElements);
+    glColor4ubv((const GLubyte *)jbyteArrayElements);
 
 	(*env)->ReleaseByteArrayElements(env, vJByteArray, jbyteArrayElements, 0); // release resources
 }
