@@ -190,7 +190,11 @@ clean:
 	rm -f src/libjglut.*
 	rm -rf linux-build
 	rm -rf windows-build
-	rm -rf jdk-8u72-linux-x64.tar.gz
+	
+.PHONY: maxclean
+maxclean: clean
+rm -rf jdk-8u72-linux-x64.tar.gz
 	rm -rf jdk1.8.0_72
 	cd freeglut-3.2.1; git clean -dfx
+	
 	
